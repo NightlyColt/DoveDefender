@@ -19,6 +19,7 @@ ABasePlayer::ABasePlayer() {
 	// Setup Mesh
 	GetMesh()->SetWorldLocation(FVector(0.f, 0.f, -90.f));
 }
+
 void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
