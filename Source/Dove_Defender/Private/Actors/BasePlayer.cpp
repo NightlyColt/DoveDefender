@@ -3,11 +3,21 @@
 
 #include "Actors/BasePlayer.h"
 #include "GameFrameWork/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 
 ABasePlayer::ABasePlayer() {
+	// Setup Spring
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
 	SpringArm->SetupAttachment(RootComponent);
+	SpringArm->SetWorldLocation(FVector(0.f, 0.f, 65.f));
 	SpringArm->bUsePawnControlRotation = true;
+
+	// Setup Camera
+	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
+	Camera->SetupAttachment(SpringArm);
+	Camera->SetWorldLocation(FVector(30.f, 110.f, -5.f));
+	// Setup Mesh
+	GetMesh()->SetWorldLocation(FVector(0.f, 0.f, -90.f));
 }
 void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);

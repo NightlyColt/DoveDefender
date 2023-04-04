@@ -16,6 +16,7 @@ class DOVE_DEFENDER_API ABasePlayer : public ABaseCharacter
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	class USpringArmComponent* SpringArm;
+	class UCameraComponent* Camera;
 
 public:
 	ABasePlayer();
