@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "BindFunction.generated.h"
 using namespace UP;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEventDispatcher, AActor*, ParamName);
 UCLASS()
 class DOVE_DEFENDER_API ABindFunction : public AActor
 {
@@ -29,4 +31,26 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Function")
 	void BlueprintNativeEvent();
 	virtual void BlueprintNativeEvent_Implementation();
+
+	// Pure
+	float Value = 0.4;
+	UFUNCTION(BlueprintCallable, Category = "Function|Pure")
+	float Pure() const;
+
+	// EventDispatcher
+	UPROPERTY(BlueprintCallable, Category = "Function")
+	FEventDispatcher OnAction;
+	UPROPERTY(BlueprintAssignable, Category = "Function")
+	FEventDispatcher OnAssignable;
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
+	FEventDispatcher OnDefault;
+
+	// Bind and timer
+	float TimeCallFunction;
+	// will crash without UFUNCTION
+	UFUNCTION()
+	void TimerCompleted();
+	// will crash without UFUNCTION
+	UFUNCTION()
+	void BindInCode(AActor* Actor);
 };
