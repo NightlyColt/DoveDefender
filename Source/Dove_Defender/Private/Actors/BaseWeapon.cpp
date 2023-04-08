@@ -9,9 +9,8 @@
 ABaseWeapon::ABaseWeapon()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
-	SetRootComponent(RootComponent);
+	SetRootComponent(SkeletalMesh);
 }
 
 // Called when the game starts or when spawned
@@ -21,13 +20,6 @@ void ABaseWeapon::BeginPlay()
 	OwningActor = Cast<APawn>(GetParentActor());
 	if (nullptr == OwningActor)
 		UE_LOG(LogTemp, Error, TEXT("No parent attached"));
-}
-
-// Called every frame
-void ABaseWeapon::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
 
 bool ABaseWeapon::CanShoot() const
