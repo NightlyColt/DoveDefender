@@ -48,7 +48,7 @@ void ABaseWeapon::Shoot()
 		Params.Instigator = OwningActor;
 		GetWorld()->SpawnActor<AActor>(ClassRef, Transforms, Params);
 		DoShoot = true;
-		OnShoot.Broadcast(this);
+		OnShoot.Broadcast(this); // Call
 	}
 }
 

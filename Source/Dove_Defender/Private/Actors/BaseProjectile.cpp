@@ -25,8 +25,8 @@ ABaseProjectile::ABaseProjectile()
 
 	FVector Scale = FVector(.3f, .3f, .3f);
 	
-	/*Mesh->SetWorldScale3D(Scale);
-	Collision->SetWorldScale3D(Scale);*/
+	Mesh->SetWorldScale3D(Scale);
+	Collision->SetWorldScale3D(Scale);
 	TimeToDestroy = 3.f;
 }
 
