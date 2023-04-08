@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BaseProjectile.generated.h"
 
+using namespace UP;
 UCLASS()
 class DOVE_DEFENDER_API ABaseProjectile : public AActor
 {
@@ -24,10 +25,18 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
 	class UProjectileMovementComponent* Movement;
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
+	class UStaticMeshComponent* Mesh;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	void HandleCollsion(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	
+	// Bind and timer
+	UPROPERTY(BlueprintReadWrite, Category = "Variables")
+	float TimeToDestroy;
+	UFUNCTION()
+	void TimerEnded();
+	UFUNCTION()
+	void HandleCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 };
