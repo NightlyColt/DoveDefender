@@ -11,9 +11,7 @@
 // Sets default values
 ABaseProjectile::ABaseProjectile()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-	Collision = CreateDefaultSubobject<USphereComponent>(TEXT("Collsion"));
+	Collision = CreateDefaultSubobject<USphereComponent>(TEXT("Collision"));
 	SetRootComponent(Collision);
 	Collision->SetCollisionProfileName("Custom");
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &ABaseProjectile::HandleCollision);
@@ -33,7 +31,7 @@ ABaseProjectile::ABaseProjectile()
 	Movement->MaxSpeed = 2000;
 	Movement->ProjectileGravityScale = 0.f;
 
-	FVector Scale = FVector(.3f, .3f, .3f);
+	FVector Scale = FVector(.6f, .6f, .6f);
 	
 	Mesh->SetWorldScale3D(Scale);
 	Collision->SetWorldScale3D(Scale);
@@ -47,13 +45,6 @@ void ABaseProjectile::BeginPlay()
 	FTimerHandle Handle;
 	GetWorld()->GetTimerManager().SetTimer(Handle, this, &ABaseProjectile::TimerEnded, TimeToDestroy, false);
 	//UE_LOG(LogTemp, Error, TEXT("Collsion"));
-
-}
-
-// Called every frame
-void ABaseProjectile::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 
 }
 

@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "BaseProjectile.generated.h"
 
-using namespace UP;
 UCLASS()
 class DOVE_DEFENDER_API ABaseProjectile : public AActor
 {
@@ -29,9 +28,6 @@ protected:
 	class UStaticMeshComponent* Mesh;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-	
 	// Bind and timer
 	UPROPERTY(BlueprintReadWrite, Category = "Variables")
 	float TimeToDestroy;

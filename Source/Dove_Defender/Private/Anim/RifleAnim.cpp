@@ -26,11 +26,9 @@ void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 		PersonaUpdate();
 }
 
-void URifleAnim::NativeInitializeAnimation()
+void URifleAnim::MyAction()
 {
-	Super::NativeInitializeAnimation();
-
-	OnActionCompleteD.AddDynamic(this, &URifleAnim::OnActionComplete);
+	OnActionCompleteD.Broadcast();
 }
 
 void URifleAnim::OnActionComplete()

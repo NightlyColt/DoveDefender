@@ -3,6 +3,8 @@
 
 #include "Actors/BaseWeapon.h"
 #include "Actors/BaseProjectile.h"
+#include "Actors/BaseCharacter.h"
+
 #include "Components/SkeletalMeshComponent.h"
 
 // Sets default values
@@ -18,6 +20,9 @@ ABaseWeapon::ABaseWeapon()
 	{
 		SkeletalMesh->SetSkeletalMesh(SkeletalMeshAsset.Object);
 	}
+
+	Projectile = ABaseProjectile::StaticClass();
+
 }
 
 // Called when the game starts or when spawned
@@ -46,17 +51,17 @@ void ABaseWeapon::Shoot()
 {
 	if (CanShoot())
 	{
-		Projectile = ABaseProjectile::StaticClass();
 		FTransform Transforms;
 		Transforms.SetLocation(SkeletalMesh->GetSocketLocation("MuzzleFlashSocket"));
 		UE_LOG(LogTemp, Warning, TEXT("I Shot"));
 		Transforms.SetRotation(FQuat(OwningActor->GetBaseAimRotation()));
+		TSubclassOf<ABaseProjectile> ClassRf;
+		ClassRf = ABaseProjectile::StaticClass();
 
 		FActorSpawnParameters Params;
 		Params.Owner = OwningActor->GetController();
 		Params.Instigator = OwningActor;
-		AActor* proj = GetWorld()->SpawnActor<ABaseProjectile>(Projectile, Transforms, Params);
-		UE_LOG(LogTemp, Warning, TEXT("Location: %s"), *proj->GetTransform().ToString());
+		AActor* proj = GetWorld()->SpawnActor<AActor>(Projectile, Transforms, Params);
 		DoShoot = true;
 		OnShoot.Broadcast(); // Call
 	}

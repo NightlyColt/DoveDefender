@@ -17,7 +17,9 @@ class DOVE_DEFENDER_API URifleAnim : public UAnimInstance
 public:
 	URifleAnim();
 	void NativeUpdateAnimation(float DeltaSeconds) override;
-	void NativeInitializeAnimation() override;
+
+	UFUNCTION(BlueprintCallable, Category = "MyCategory")
+	void MyAction();
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Speed;
