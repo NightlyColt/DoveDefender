@@ -4,37 +4,35 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "BaseProjectile.generated.h"
+#include "OtherProjectile.generated.h"
 
 UCLASS()
-class DOVE_DEFENDER_API ABaseProjectile : public AActor
+class DOVE_DEFENDER_API AOtherProjectile : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ABaseProjectile();
+	AOtherProjectile();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
+		class USphereComponent* Collision;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
-	class USphereComponent* Collision;
-
+		class UProjectileMovementComponent* Movement;
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
-	class UProjectileMovementComponent* Movement;
-	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
-	class UStaticMeshComponent* Mesh;
+		class UStaticMeshComponent* Mesh;
 
-	class UStaticMesh* ProjectileMesh;
-
-public:	
+public:
 	// Bind and timer
 	UPROPERTY(BlueprintReadWrite, Category = "Variables")
-	float TimeToDestroy;
+		float TimeToDestroy;
 	UFUNCTION()
-	void TimerEnded();
+		void TimerEnded();
 	UFUNCTION()
-	void HandleCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+		void HandleCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
 };

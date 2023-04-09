@@ -4,6 +4,8 @@
 #include "Actors/BaseWeapon.h"
 #include "Actors/BaseProjectile.h"
 #include "Actors/BaseCharacter.h"
+#include "Actors/OtherProjectile.h"
+
 
 #include "Components/SkeletalMeshComponent.h"
 
@@ -61,7 +63,7 @@ void ABaseWeapon::Shoot()
 		FActorSpawnParameters Params;
 		Params.Owner = OwningActor->GetController();
 		Params.Instigator = OwningActor;
-		AActor* proj = GetWorld()->SpawnActor<AActor>(Projectile, Transforms, Params);
+		AActor* proj = GetWorld()->SpawnActor<AActor>(ABaseProjectile::StaticClass(), Transforms, Params);
 		DoShoot = true;
 		OnShoot.Broadcast(); // Call
 	}
