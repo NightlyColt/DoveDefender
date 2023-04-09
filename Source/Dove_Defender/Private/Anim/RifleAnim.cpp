@@ -2,6 +2,15 @@
 
 
 #include "Anim/RifleAnim.h"
+#include "Animation/AnimSequenceBase.h"
+#include "Animation/AnimSequence.h"
+
+URifleAnim::URifleAnim()
+{
+	static ConstructorHelpers::FObjectFinder<UAnimSequence> AnimAsset(TEXT("AnimSequence'/Game/END_Starter/Mannequin/A_Fire_Ironsights.A_Fire_Ironsights'"));
+
+	Asset = AnimAsset.Object;
+}
 
 void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 	Super::NativeUpdateAnimation(DeltaSeconds);
@@ -13,4 +22,29 @@ void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 		auto Rotation = Pawn->GetActorRotation();
 		Direction = CalculateDirection(Velocity, Rotation);
 	}
+	else
+		PersonaUpdate();
+}
+
+void URifleAnim::NativeInitializeAnimation()
+{
+	Super::NativeInitializeAnimation();
+
+	OnActionCompleteD.AddDynamic(this, &URifleAnim::OnActionComplete);
+}
+
+void URifleAnim::OnActionComplete()
+{
+	OnActionCompleteD.Broadcast();
+}
+
+void URifleAnim::PlayShootAnim()
+{
+	PlaySlotAnimationAsDynamicMontage(Asset, "Action");
+	UE_LOG(LogTemp, Warning, TEXT("Played"));
+}
+
+void URifleAnim::PersonaUpdate()
+{
+	PlayShootAnim();
 }

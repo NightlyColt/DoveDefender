@@ -9,16 +9,32 @@
 /**
  * 
  */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FADispatcher);
 UCLASS()
 class DOVE_DEFENDER_API URifleAnim : public UAnimInstance
 {
 	GENERATED_BODY()
 public:
+	URifleAnim();
 	void NativeUpdateAnimation(float DeltaSeconds) override;
+	void NativeInitializeAnimation() override;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Speed;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Direction;
+
+	UFUNCTION()
+	void OnActionComplete();
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
+	FADispatcher OnActionCompleteD;
+
+	void PersonaUpdate();
+
+	class UAnimSequenceBase* Asset;
+	void PlayShootAnim();
+
+
 };

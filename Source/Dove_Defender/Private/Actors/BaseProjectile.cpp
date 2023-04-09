@@ -5,6 +5,7 @@
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Materials/MaterialInterface.h"
 #include "../../Dove_Defender.h"
 
 // Sets default values
@@ -21,7 +22,16 @@ ABaseProjectile::ABaseProjectile()
 	ConstructorHelpers::FObjectFinder<UStaticMesh>Asset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	Mesh->SetStaticMesh(Asset.Object);
 
+	UMaterialInterface* NewMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("Material'/Game/Art/M_FlatColor.M_FlatColor'"), nullptr, LOAD_None, nullptr);
+	if (NewMaterial != nullptr)
+	{
+		Mesh->SetMaterial(0, NewMaterial);
+	}
 	Movement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Movement"));
+
+	Movement->InitialSpeed = 1800;
+	Movement->MaxSpeed = 2000;
+	Movement->ProjectileGravityScale = 0.f;
 
 	FVector Scale = FVector(.3f, .3f, .3f);
 	
