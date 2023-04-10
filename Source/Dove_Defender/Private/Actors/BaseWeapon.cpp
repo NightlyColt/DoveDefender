@@ -63,7 +63,7 @@ void ABaseWeapon::Shoot()
 		FActorSpawnParameters Params;
 		Params.Owner = OwningActor->GetController();
 		Params.Instigator = OwningActor;
-		AActor* proj = GetWorld()->SpawnActor<AActor>(ClassRf, Transforms, Params);
+		AActor* proj = GetWorld()->SpawnActor<AActor>(ABaseProjectile::StaticClass(), Transforms, Params);
 		DoShoot = true;
 		OnShoot.Broadcast(); // Call
 	}

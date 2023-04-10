@@ -27,6 +27,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
 	class UStaticMeshComponent* Mesh;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float Damage;
+
 public:	
 	// Bind and timer
 	UPROPERTY(BlueprintReadWrite, Category = "Variables")

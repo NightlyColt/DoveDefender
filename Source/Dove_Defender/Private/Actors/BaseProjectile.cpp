@@ -6,6 +6,8 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Materials/MaterialInterface.h"
+#include "GameFramework/DamageType.h"
+#include "Kismet/GameplayStatics.h"
 #include "../../Dove_Defender.h"
 
 // Sets default values
@@ -28,17 +30,20 @@ ABaseProjectile::ABaseProjectile()
 	{
 		Mesh->SetMaterial(0, NewMaterial);
 	}
+	Mesh->SetCollisionProfileName("NoCollision");
 	Movement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Movement"));
-
+	Mesh->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
+	Mesh->SetGenerateOverlapEvents(false);
 	Movement->InitialSpeed = 1800;
 	Movement->MaxSpeed = 2000;
 	Movement->ProjectileGravityScale = 0.f;
 
-	FVector Scale = FVector(.6f, .6f, .6f);
+	FVector Scale = FVector(.8f, .8f, .8f);
 	
 	Mesh->SetWorldScale3D(Scale);
 	Collision->SetWorldScale3D(Scale);
 	TimeToDestroy = 3.f;
+	Damage = 1.f;
 }
 
 // Called when the game starts or when spawned
@@ -53,12 +58,17 @@ void ABaseProjectile::BeginPlay()
 
 void ABaseProjectile::HandleCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	UE_LOG(Game, Error, TEXT("Collsion"));
-	Destroy();
+	UGameplayStatics::ApplyDamage(OtherActor, Damage, GetInstigatorController(), GetInstigator(), UDamageType::StaticClass());
+	if (!IsPendingKill())
+	{
+		Destroy();
+	}
+	
 }
 
 void ABaseProjectile::TimerEnded()
 {
-	Destroy();
+	/*if (!IsPendingKill())
+		Destroy();*/
 }
 
