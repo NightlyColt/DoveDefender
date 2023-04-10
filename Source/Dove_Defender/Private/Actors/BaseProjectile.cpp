@@ -17,12 +17,11 @@ ABaseProjectile::ABaseProjectile()
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &ABaseProjectile::HandleCollision);
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(GetRootComponent());
-	/*static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("StaticMesh'/Engine/EditorMeshes/ArcadeEditorSphere.ArcadeEditorSphere'"));
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
 	if (MeshAsset.Succeeded())
 	{
-		ProjectileMesh = MeshAsset.Object;
-		Mesh->SetStaticMesh(ProjectileMesh);
-	}*/
+		Mesh->SetStaticMesh(MeshAsset.Object);
+	}
 
 	UMaterialInterface* NewMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("Material'/Game/Art/M_FlatColor.M_FlatColor'"), nullptr, LOAD_None, nullptr);
 	if (NewMaterial != nullptr)

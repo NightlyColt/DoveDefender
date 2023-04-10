@@ -14,11 +14,20 @@ class DOVE_DEFENDER_API ABasePlayer : public ABaseCharacter
 {
 	GENERATED_BODY()
 protected:
+	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
+	TSubclassOf<UUserWidget> WidgetClass;
+	class UMyUserWidget* HUD;
 	
-
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	class USpringArmComponent* SpringArm;
+	class UCameraComponent* Camera;
 public:
 	ABasePlayer();
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
+
+	UFUNCTION()
+	void SetHealth(float Ratio);
 };

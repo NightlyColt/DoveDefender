@@ -24,16 +24,17 @@ protected:
 	class ABaseWeapon* CurrentWeapon;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class URifleAnim* AnimBP;
+		
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UHealthComponent* HealthComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
-	class USpringArmComponent* SpringArm;
-	class UCameraComponent* Camera;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UFUNCTION(BlueprintCallable)
 	void CharacterShoot();
 
 	UFUNCTION()

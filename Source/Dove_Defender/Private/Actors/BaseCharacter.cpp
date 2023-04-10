@@ -5,9 +5,7 @@
 #include "Actors/BaseWeapon.h"
 #include "Anim/RifleAnim.h"
 #include "Components/ChildActorComponent.h"
-#include "Camera/CameraComponent.h"
-#include "GameFrameWork/SpringArmComponent.h"
-
+#include "Comp/HealthComponent.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -19,18 +17,9 @@ ABaseCharacter::ABaseCharacter()
 	WeaponChild = CreateDefaultSubobject<UChildActorComponent>("WeaponChild");
 	WeaponChild->SetupAttachment(GetMesh(), "Weapon_Socket");
 
-	// Setup Spring
-	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
-	SpringArm->SetupAttachment(RootComponent);
-	SpringArm->SetWorldLocation(FVector(0.f, 0.f, 65.f));
-	SpringArm->bUsePawnControlRotation = true;
-
-	// Setup Camera
-	Camera = CreateDefaultSubobject<UCameraComponent>("Camera");
-	Camera->SetupAttachment(SpringArm);
-	Camera->SetWorldLocation(FVector(30.f, 110.f, -5.f));
 	// Setup Mesh
 	GetMesh()->SetWorldLocation(FVector(0.f, 0.f, -90.f));
+	HealthComp = CreateDefaultSubobject<UHealthComponent>("Health_Component");
 }
 
 // Called when the game starts or when spawned

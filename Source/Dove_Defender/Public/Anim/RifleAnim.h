@@ -36,6 +36,7 @@ public:
 	void PersonaUpdate();
 
 	class UAnimSequenceBase* Asset;
+	UFUNCTION(BlueprintCallable)
 	void PlayShootAnim();
 
 
