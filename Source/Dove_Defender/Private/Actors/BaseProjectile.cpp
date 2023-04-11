@@ -38,7 +38,7 @@ ABaseProjectile::ABaseProjectile()
 	Movement->MaxSpeed = 2000;
 	Movement->ProjectileGravityScale = 0.f;
 
-	FVector Scale = FVector(.8f, .8f, .8f);
+	FVector Scale = FVector(.6f, .6f, .6f);
 	
 	Mesh->SetWorldScale3D(Scale);
 	Collision->SetWorldScale3D(Scale);
@@ -68,7 +68,7 @@ void ABaseProjectile::HandleCollision(UPrimitiveComponent* OverlappedComponent, 
 
 void ABaseProjectile::TimerEnded()
 {
-	/*if (!IsPendingKill())
-		Destroy();*/
+	if (!IsPendingKill())
+		Destroy();
 }
 

@@ -19,8 +19,8 @@ protected:
 	TSubclassOf<UUserWidget> WidgetClass;
 	class UMyUserWidget* HUD;
 	
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	class USpringArmComponent* SpringArm;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	class UCameraComponent* Camera;
 public:
 	ABasePlayer();

@@ -24,5 +24,6 @@ protected:
 
 public:
 	void NativeConstruct() override;
+	UFUNCTION(BlueprintCallable)
 	void SetHealth(float ratio);
 };

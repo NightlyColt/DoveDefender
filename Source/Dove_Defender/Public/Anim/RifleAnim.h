@@ -17,27 +17,27 @@ class DOVE_DEFENDER_API URifleAnim : public UAnimInstance
 public:
 	URifleAnim();
 	void NativeUpdateAnimation(float DeltaSeconds) override;
-
-	UFUNCTION(BlueprintCallable, Category = "MyCategory")
-	void MyAction();
+protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Speed;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Direction;
-
+public:
 	UFUNCTION()
 	void OnActionComplete();
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FADispatcher OnActionCompleteD;
 
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Function")
 	void PersonaUpdate();
+	void virtual PersonaUpdate_Implementation();
 
-	class UAnimSequenceBase* Asset;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+	class UAnimSequenceBase* ShootAnim;
+
 	UFUNCTION(BlueprintCallable)
 	void PlayShootAnim();
-
-
 };

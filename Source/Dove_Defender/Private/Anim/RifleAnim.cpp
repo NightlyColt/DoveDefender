@@ -9,12 +9,12 @@ URifleAnim::URifleAnim()
 {
 	static ConstructorHelpers::FObjectFinder<UAnimSequence> AnimAsset(TEXT("AnimSequence'/Game/END_Starter/Mannequin/A_Fire_Ironsights.A_Fire_Ironsights'"));
 
-	Asset = AnimAsset.Object;
+	ShootAnim = AnimAsset.Object;
 }
 
 void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 	Super::NativeUpdateAnimation(DeltaSeconds);
-
+	
 	APawn* Pawn = TryGetPawnOwner();
 	if (nullptr != Pawn) {
 		auto Velocity = Pawn->GetVelocity();
@@ -26,11 +26,6 @@ void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 		PersonaUpdate();
 }
 
-void URifleAnim::MyAction()
-{
-	OnActionCompleteD.Broadcast();
-}
-
 void URifleAnim::OnActionComplete()
 {
 	OnActionCompleteD.Broadcast();
@@ -38,11 +33,11 @@ void URifleAnim::OnActionComplete()
 
 void URifleAnim::PlayShootAnim()
 {
-	PlaySlotAnimationAsDynamicMontage(Asset, "Action");
+	PlaySlotAnimationAsDynamicMontage(ShootAnim, "Action");
 	UE_LOG(LogTemp, Warning, TEXT("Played"));
 }
 
-void URifleAnim::PersonaUpdate()
+void URifleAnim::PersonaUpdate_Implementation()
 {
 	PlayShootAnim();
 }

@@ -40,8 +40,7 @@ void UHealthComponent::SetStartHealth()
 
 void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
-	Current -= Damage;
-	Current = FMath::Clamp<float>(Current, 0, Max);
+	Current = FMath::Clamp<float>(Current - Damage, 0, Max);
 	if (Current > 0)
 	{
 		float ratio = Current / Max;
