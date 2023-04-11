@@ -26,7 +26,9 @@ protected:
 	class UImage* Reticle;
 
 	UMaterialInstanceDynamic* DynamicMaterial;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FLinearColor DefaultColor;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FLinearColor DangerColor;
 	FVector EndPoint;
 	FVector HitLocation;

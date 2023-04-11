@@ -38,35 +38,35 @@ void ABaseWeapon::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("No parent attached"));
 }
 
-FRotator ABaseWeapon::GetBaseAimRotation() const
-{
-	TArray<UUserWidget*> FoundWidgets;
-	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UMyUserWidget::StaticClass());
-	UMyUserWidget* Widget = Cast<UMyUserWidget>(FoundWidgets[0]);
-	if (FoundWidgets[0]->GetOwningPlayerPawn() == OwningActor)
-	{
-		FVector Destination;
-		bool Valid;
-		FVector HitLocation;
-		FVector EndPoint;
-		Widget->GetAimedPoint(Valid, HitLocation, EndPoint);
-
-		if (Valid)
-		{
-			Destination = HitLocation;
-		}
-		else
-		{
-			Destination = EndPoint;
-		}
-		FVector Result = Destination - SkeletalMesh->GetSocketLocation("MuzzleFlashSocket");
-		return UKismetMathLibrary::MakeRotFromX(Result);
-	}
-	else
-	{
-		return OwningActor->GetBaseAimRotation();
-	}
-}
+//FRotator ABaseWeapon::GetBaseAimRotation() const
+//{
+//	TArray<UUserWidget*> FoundWidgets;
+//	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UMyUserWidget::StaticClass());
+//	UMyUserWidget* Widget = Cast<UMyUserWidget>(FoundWidgets[0]);
+//	if (FoundWidgets[0]->GetOwningPlayerPawn() == OwningActor)
+//	{
+//		FVector Destination;
+//		bool Valid;
+//		FVector HitLocation;
+//		FVector EndPoint;
+//		Widget->GetAimedPoint(Valid, HitLocation, EndPoint);
+//
+//		if (Valid)
+//		{
+//			Destination = HitLocation;
+//		}
+//		else
+//		{
+//			Destination = EndPoint;
+//		}
+//		FVector Result = Destination - SkeletalMesh->GetSocketLocation("MuzzleFlashSocket");
+//		return UKismetMathLibrary::MakeRotFromX(Result);
+//	}
+//	else
+//	{
+//		return OwningActor->GetBaseAimRotation();
+//	}
+//}
 
 bool ABaseWeapon::CanShoot() const
 {
@@ -87,7 +87,7 @@ void ABaseWeapon::Shoot()
 		FTransform Transforms;
 		Transforms.SetLocation(SkeletalMesh->GetSocketLocation("MuzzleFlashSocket"));
 		UE_LOG(LogTemp, Warning, TEXT("I Shot"));
-		Transforms.SetRotation(FQuat(GetBaseAimRotation()));
+		Transforms.SetRotation(FQuat(OwningActor->GetBaseAimRotation()));
 		TSubclassOf<ABaseProjectile> ClassRf;
 		ClassRf = ABaseProjectile::StaticClass();
 

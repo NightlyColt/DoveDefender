@@ -35,6 +35,8 @@ public:
 	void PlayDeathAnim(float Ratio);
 	UFUNCTION(BlueprintCallable)
 	void PlayHitAnim();
+
+	UAnimSequence* GetRandAnim(TArray<UAnimSequence*>& Animations, int& Index);
 	////////////////////////////////////////////////////////////////////////////////////
 	// UProperties
 protected:

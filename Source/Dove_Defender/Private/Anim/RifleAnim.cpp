@@ -40,13 +40,28 @@ void URifleAnim::PlayShootAnim()
 
 void URifleAnim::PlayDeathAnim(float Ratio)
 {
-	DeathIndex = FMath::Clamp(FMath::RandRange(0, DeathAnimations.Num()), 0, DeathAnimations.Num());
-	CurrentDeath = DeathAnimations[DeathIndex];
+	
+	CurrentDeath = GetRandAnim(DeathAnimations, DeathIndex);
 }
 
 void URifleAnim::PlayHitAnim()
 {
 	PlaySlotAnimationAsDynamicMontage(HitAnimation, "Damaged");																
+}
+
+UAnimSequence* URifleAnim::GetRandAnim(TArray<UAnimSequence*>& Animations, int& Index)
+{
+	UAnimSequence* NewAnim;
+	while (true)
+	{
+		srand(time(NULL));
+		Index = rand() % Animations.Num() - 1;
+		Index = FMath::Clamp(Index, 0, Animations.Num() - 1);
+		NewAnim = Animations[Index];
+		if (NewAnim != nullptr)
+			break;
+	}
+	return NewAnim;
 }
 
 void URifleAnim::PersonaUpdate_Implementation()

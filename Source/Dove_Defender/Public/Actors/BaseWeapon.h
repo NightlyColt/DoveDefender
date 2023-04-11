@@ -24,7 +24,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class USkeletalMeshComponent* SkeletalMesh;
 
-	FRotator GetBaseAimRotation() const;
+	//FRotator GetBaseAimRotation() const;
 
 public:
 	// Declare a delegate instance for when the weapon is fired
