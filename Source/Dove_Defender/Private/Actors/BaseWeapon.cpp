@@ -5,9 +5,10 @@
 #include "Actors/BaseProjectile.h"
 #include "Actors/BaseCharacter.h"
 #include "Actors/OtherProjectile.h"
-
-
+#include "Widgets/MyUserWidget.h"
+#include "Blueprint/WidgetBlueprintLibrary.h"
 #include "Components/SkeletalMeshComponent.h"
+#include <Kismet/KismetMathLibrary.h>
 
 // Sets default values
 ABaseWeapon::ABaseWeapon()
@@ -37,9 +38,39 @@ void ABaseWeapon::BeginPlay()
 		UE_LOG(LogTemp, Error, TEXT("No parent attached"));
 }
 
+FRotator ABaseWeapon::GetBaseAimRotation() const
+{
+	TArray<UUserWidget*> FoundWidgets;
+	UWidgetBlueprintLibrary::GetAllWidgetsOfClass(GetWorld(), FoundWidgets, UMyUserWidget::StaticClass());
+	UMyUserWidget* Widget = Cast<UMyUserWidget>(FoundWidgets[0]);
+	if (FoundWidgets[0]->GetOwningPlayerPawn() == OwningActor)
+	{
+		FVector Destination;
+		bool Valid;
+		FVector HitLocation;
+		FVector EndPoint;
+		Widget->GetAimedPoint(Valid, HitLocation, EndPoint);
+
+		if (Valid)
+		{
+			Destination = HitLocation;
+		}
+		else
+		{
+			Destination = EndPoint;
+		}
+		FVector Result = Destination - SkeletalMesh->GetSocketLocation("MuzzleFlashSocket");
+		return UKismetMathLibrary::MakeRotFromX(Result);
+	}
+	else
+	{
+		return OwningActor->GetBaseAimRotation();
+	}
+}
+
 bool ABaseWeapon::CanShoot() const
 {
-	return !DoShoot;
+	return !DoShoot && !Dead;
 }
 
 void ABaseWeapon::StopAnimation()
@@ -56,7 +87,7 @@ void ABaseWeapon::Shoot()
 		FTransform Transforms;
 		Transforms.SetLocation(SkeletalMesh->GetSocketLocation("MuzzleFlashSocket"));
 		UE_LOG(LogTemp, Warning, TEXT("I Shot"));
-		Transforms.SetRotation(FQuat(OwningActor->GetBaseAimRotation()));
+		Transforms.SetRotation(FQuat(GetBaseAimRotation()));
 		TSubclassOf<ABaseProjectile> ClassRf;
 		ClassRf = ABaseProjectile::StaticClass();
 

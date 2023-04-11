@@ -17,27 +17,54 @@ class DOVE_DEFENDER_API URifleAnim : public UAnimInstance
 public:
 	URifleAnim();
 	void NativeUpdateAnimation(float DeltaSeconds) override;
-protected:
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float Speed;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	float Direction;
 public:
+	///////////////////////////////////////////////////////////////////////////////////
+	// UFunctions
 	UFUNCTION()
 	void OnActionComplete();
-
-	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
-	FADispatcher OnActionCompleteD;
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Function")
 	void PersonaUpdate();
 	void virtual PersonaUpdate_Implementation();
 
+	UFUNCTION(BlueprintCallable)
+	void PlayShootAnim();
+	
+	UFUNCTION(BlueprintCallable)
+	void PlayDeathAnim(float Ratio);
+	UFUNCTION(BlueprintCallable)
+	void PlayHitAnim();
+	////////////////////////////////////////////////////////////////////////////////////
+	// UProperties
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float Speed;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float Direction;
+
+public:
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
+	FADispatcher OnActionCompleteD;
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
 	class UAnimSequenceBase* ShootAnim;
 
-	UFUNCTION(BlueprintCallable)
-	void PlayShootAnim();
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
+	bool DebugDeath;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
+	bool DebugDamaged;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+	TArray<UAnimSequence*> DeathAnimations;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+	UAnimSequence* CurrentDeath;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+	UAnimSequence* HitAnimation;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Animations | DeathIndex")
+	int DeathIndex;
 };

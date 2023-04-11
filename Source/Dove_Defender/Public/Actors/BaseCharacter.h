@@ -31,6 +31,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UHealthComponent* HealthComp;
 
+	UPawnMovementComponent* Movement;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -38,10 +40,14 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
-
 	UFUNCTION()
 	void PlayShootAnim();
 
 	UFUNCTION()
 	void StopShootAnim();
+
+	UFUNCTION()
+	virtual void CharacterDeath(float Ratio);
+	UFUNCTION()
+	virtual void CharacterDamaged(float Ratio);
 };

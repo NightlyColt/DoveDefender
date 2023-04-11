@@ -13,7 +13,7 @@
 void ABasePlayer::BeginPlay() 
 {
 	Super::BeginPlay();
-	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	PlayerController = Cast<APlayerController>(GetController());
 	HUD = CreateWidget<UMyUserWidget>(PlayerController, WidgetClass);
 	HUD->AddToViewport(0);
 	HealthComp->OnDamaged.AddDynamic(this, &ABasePlayer::SetHealth);
@@ -64,5 +64,18 @@ void ABasePlayer::MoveRight(float Value)
 
 void ABasePlayer::SetHealth(float Ratio)
 {
+	HUD->SetHealth(Ratio);
+}
+
+void ABasePlayer::CharacterDeath(float Ratio)
+{
+	DisableInput(PlayerController);
+	Super::CharacterDeath(0);
+	HUD->RemoveFromParent();
+}
+
+void ABasePlayer::CharacterDamaged(float Ratio)
+{
+	Super::CharacterDamaged(0);
 	HUD->SetHealth(Ratio);
 }

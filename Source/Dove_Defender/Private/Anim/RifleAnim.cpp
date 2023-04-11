@@ -10,6 +10,7 @@ URifleAnim::URifleAnim()
 	static ConstructorHelpers::FObjectFinder<UAnimSequence> AnimAsset(TEXT("AnimSequence'/Game/END_Starter/Mannequin/A_Fire_Ironsights.A_Fire_Ironsights'"));
 
 	ShootAnim = AnimAsset.Object;
+	DeathIndex = -1;
 }
 
 void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
@@ -23,7 +24,7 @@ void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 		Direction = CalculateDirection(Velocity, Rotation);
 	}
 	else
-		PersonaUpdate();
+		PersonaUpdate_Implementation();
 }
 
 void URifleAnim::OnActionComplete()
@@ -37,7 +38,29 @@ void URifleAnim::PlayShootAnim()
 	UE_LOG(LogTemp, Warning, TEXT("Played"));
 }
 
+void URifleAnim::PlayDeathAnim(float Ratio)
+{
+	DeathIndex = FMath::Clamp(FMath::RandRange(0, DeathAnimations.Num()), 0, DeathAnimations.Num());
+	CurrentDeath = DeathAnimations[DeathIndex];
+}
+
+void URifleAnim::PlayHitAnim()
+{
+	PlaySlotAnimationAsDynamicMontage(HitAnimation, "Damaged");																
+}
+
 void URifleAnim::PersonaUpdate_Implementation()
 {
 	PlayShootAnim();
+
+	if (DebugDeath)
+	{
+		DebugDeath = !DebugDeath;
+		PlayDeathAnim(0.f);
+	}
+	else if (DebugDamaged)
+	{
+		DebugDamaged = !DebugDamaged;
+		PlayHitAnim();
+	}
 }

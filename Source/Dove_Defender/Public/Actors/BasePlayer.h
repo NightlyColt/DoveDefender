@@ -22,6 +22,8 @@ protected:
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	class UCameraComponent* Camera;
+
+	APlayerController* PlayerController;
 public:
 	ABasePlayer();
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -30,4 +32,8 @@ public:
 
 	UFUNCTION()
 	void SetHealth(float Ratio);
+
+	virtual void CharacterDeath(float Ratio) override;
+	virtual void CharacterDamaged(float Ratio) override;
+
 };

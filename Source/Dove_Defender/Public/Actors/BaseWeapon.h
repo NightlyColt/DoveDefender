@@ -24,6 +24,8 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class USkeletalMeshComponent* SkeletalMesh;
 
+	FRotator GetBaseAimRotation() const;
+
 public:
 	// Declare a delegate instance for when the weapon is fired
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
@@ -40,6 +42,8 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool DoShoot;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	bool Dead;
 	// Declare a reference to the owning actor of the weapon
 	UPROPERTY(BlueprintReadOnly)
 	APawn* OwningActor;
@@ -50,4 +54,6 @@ public:
 
 	// Declare a function to fire the weapon
 	void Shoot();
+
+
 };

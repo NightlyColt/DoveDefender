@@ -17,13 +17,24 @@ public:
 	UMyUserWidget(const FObjectInitializer& ObjectInitializer);
 protected:
 
+	virtual void NativeTick(const FGeometry& MyGeometry, float InDeltaTime) override;
+	void SetMaterialColor(FLinearColor Color);
+	bool GetLinePoints(FVector& _StartPoint, FVector& _EndPoint) const;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UProgressBar* Health;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UImage* Reticle;
 
+	UMaterialInstanceDynamic* DynamicMaterial;
+	FLinearColor DefaultColor;
+	FLinearColor DangerColor;
+	FVector EndPoint;
+	FVector HitLocation;
+	bool ValidHit;
+
 public:
 	void NativeConstruct() override;
+	bool GetAimedPoint(bool& _Valid, FVector& _HitLocation, FVector& _EndPoint) const;
 	UFUNCTION(BlueprintCallable)
 	void SetHealth(float ratio);
 };

@@ -45,4 +45,7 @@ public:
 	FText EditDefaultsOnly;
 	UPROPERTY(EditInstanceOnly, Category = "Variable|ReadWrite")
 	FString EditInstanceOnly;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	TArray<int32> ValArray;
 };

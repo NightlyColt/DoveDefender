@@ -6,6 +6,9 @@
 #include "Anim/RifleAnim.h"
 #include "Components/ChildActorComponent.h"
 #include "Comp/HealthComponent.h"
+#include "GameFramework/PawnMovementComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Engine/EngineTypes.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()
@@ -20,6 +23,8 @@ ABaseCharacter::ABaseCharacter()
 	// Setup Mesh
 	GetMesh()->SetWorldLocation(FVector(0.f, 0.f, -90.f));
 	HealthComp = CreateDefaultSubobject<UHealthComponent>("Health_Component");
+
+	Movement = GetMovementComponent();
 }
 
 // Called when the game starts or when spawned
@@ -50,6 +55,8 @@ void ABaseCharacter::BeginPlay()
 		{
 			CurrentWeapon->OnShoot.AddDynamic(this, &ABaseCharacter::PlayShootAnim);
 			AnimBP->OnActionCompleteD.AddDynamic(this, &ABaseCharacter::StopShootAnim);
+			HealthComp->OnDamaged.AddDynamic(this, &ABaseCharacter::CharacterDamaged);
+			HealthComp->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
 		}
 
 	}
@@ -87,5 +94,18 @@ void ABaseCharacter::PlayShootAnim()
 void ABaseCharacter::StopShootAnim()
 {
 	CurrentWeapon->StopAnimation();
+}
+
+void ABaseCharacter::CharacterDeath(float Ratio)
+{
+	Movement->StopMovementImmediately();
+	AnimBP->PlayDeathAnim(0);
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	CurrentWeapon->Dead = true;
+}
+
+void ABaseCharacter::CharacterDamaged(float Ratio)
+{
+	AnimBP->PlayHitAnim();
 }
 
