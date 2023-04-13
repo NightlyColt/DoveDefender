@@ -9,8 +9,12 @@
 #include "Components/ActorComponent.h"
 #include "GameFrameWork/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
+#include <Blueprint/WidgetBlueprintLibrary.h>
+#include <Kismet/KismetMathLibrary.h>
+#include "DrawDebugHelpers.h"
+#include "Actors/BaseWeapon.h"
 
-void ABasePlayer::BeginPlay() 
+void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
 	PlayerController = Cast<APlayerController>(GetController());
@@ -20,7 +24,7 @@ void ABasePlayer::BeginPlay()
 	HealthComp->OnDeath.AddDynamic(this, &ABasePlayer::SetHealth);
 }
 
-ABasePlayer::ABasePlayer() 
+ABasePlayer::ABasePlayer()
 {
 	// Setup Spring
 	SpringArm = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
@@ -38,7 +42,7 @@ ABasePlayer::ABasePlayer()
 
 }
 
-void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) 
+void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
@@ -78,4 +82,29 @@ void ABasePlayer::CharacterDamaged(float Ratio)
 {
 	Super::CharacterDamaged(0);
 	HUD->SetHealth(Ratio);
+}
+
+FRotator ABasePlayer::GetBaseAimRotation() const
+{
+	FVector Destination;
+	bool Valid;
+	FVector HitLocation;
+	FVector EndPoint;
+	HUD->GetAimedPoint(Valid, HitLocation, EndPoint);
+
+	if (Valid)
+	{
+		Destination = HitLocation;
+		if (HitLocation.ContainsNaN())
+			UE_LOG(LogTemp, Warning, TEXT("HitLocation is NaN"))
+	}
+	else
+	{
+		Destination = EndPoint;
+		if (EndPoint.ContainsNaN())
+			UE_LOG(LogTemp, Warning, TEXT("Endpoint is NaN"))
+	}
+
+	FVector Result = Destination - CurrentWeapon->SkeletalMesh->GetSocketLocation("MuzzleFlashSocket");
+	return UKismetMathLibrary::MakeRotFromX(Result);
 }

@@ -50,4 +50,5 @@ public:
 	virtual void CharacterDeath(float Ratio);
 	UFUNCTION()
 	virtual void CharacterDamaged(float Ratio);
+
 };

@@ -9,6 +9,9 @@
 #include "GameFramework/PawnMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Engine/EngineTypes.h"
+#include <Kismet/KismetMathLibrary.h>
+#include <Blueprint/WidgetBlueprintLibrary.h>
+#include "Widgets/MyUserWidget.h"
 
 // Sets default values
 ABaseCharacter::ABaseCharacter()

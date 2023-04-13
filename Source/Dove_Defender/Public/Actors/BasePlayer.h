@@ -35,5 +35,6 @@ public:
 
 	virtual void CharacterDeath(float Ratio) override;
 	virtual void CharacterDamaged(float Ratio) override;
+	FRotator GetBaseAimRotation() const override;
 
 };

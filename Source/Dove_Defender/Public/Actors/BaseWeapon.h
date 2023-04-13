@@ -21,12 +21,12 @@ protected:
 	virtual void BeginPlay() override;
 
 	// Declare a skeletal mesh component for the weapon's mesh
-	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-	class USkeletalMeshComponent* SkeletalMesh;
-
-	//FRotator GetBaseAimRotation() const;
+	
 
 public:
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	class USkeletalMeshComponent* SkeletalMesh;
 	// Declare a delegate instance for when the weapon is fired
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FEDispatcher OnShoot;
