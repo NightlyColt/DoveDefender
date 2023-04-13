@@ -3,7 +3,8 @@
 
 #include "Test/TestPawn.h"
 #include "../../Dove_Defender.h"
-
+#include "EngineUtils.h"
+#include "Interfaces/DemoInterface.h"
 // Sets default values
 ATestPawn::ATestPawn()
 {
@@ -19,7 +20,23 @@ void ATestPawn::BeginPlay()
 	FActorSpawnParameters Params;
 	Params.Owner = GetController();
 	Params.Instigator = this;
-	GetWorld()->SpawnActor<AActor>(ClassType, FTransform(), Params);
+
+	for (TActorIterator<AActor>itr(GetWorld()); itr; ++itr)
+	{
+		UDemoInterface* U = Cast<UDemoInterface>(*itr);
+		if (nullptr != U)
+		{
+			UE_LOG(LogTemp, Warning, TEXT("I am U"));
+		}
+		IDemoInterface* I = Cast<IDemoInterface>(*itr);
+		if (nullptr != I)
+		{
+			I->Shoot();
+			UE_LOG(LogTemp, Warning, TEXT("I am I"));
+
+		}
+	}
+	//GetWorld()->SpawnActor<AActor>(ClassType, FTransform(), Params);
 }
 
 // Called every frame

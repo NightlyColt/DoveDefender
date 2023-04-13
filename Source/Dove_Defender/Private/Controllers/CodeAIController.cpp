@@ -2,4 +2,30 @@
 
 
 #include "Controllers/CodeAIController.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+//void ACodeAIController::OnPossess(APawn* aPawn)
+//{
+//	int x = 0;
+//	/*RunBehaviorTree()*/
+//}
 
+ACodeAIController::ACodeAIController()
+{
+	AIPerception = CreateDefaultSubobject<UAIPerceptionComponent>(TEXT("AIPerception"));
+	AIPerception->OnTargetPerceptionUpdated.AddDynamic(this, &ACodeAIController::TargetPerceptionUpdated);
+}
+
+void ACodeAIController::OnPossess(APawn* aPawn)
+{
+	Super::OnPossess(aPawn);
+	RunBehaviorTree(BTAsset);
+}
+
+void ACodeAIController::TargetPerceptionUpdated(AActor* Actor, FAIStimulus Stimulus)
+{
+	if (Stimulus.WasSuccessfullySensed())
+		Blackboard->SetValueAsObject(KeyName, Actor);
+	else
+		Blackboard->ClearValue(KeyName);
+}

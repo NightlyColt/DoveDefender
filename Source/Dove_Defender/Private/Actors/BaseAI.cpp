@@ -3,10 +3,8 @@
 
 #include "Actors/BaseAI.h"
 
-void ABaseAI::Tick(float DeltaTime)
+void ABaseAI::Shoot()
 {
-	Super::Tick(DeltaTime);
-
 	CharacterShoot();
 }
 

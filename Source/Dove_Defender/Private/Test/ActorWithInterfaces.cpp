@@ -25,3 +25,8 @@ void AActorWithInterfaces::Tick(float DeltaTime)
 
 }
 
+void AActorWithInterfaces::Shoot()
+{
+	UE_LOG(LogTemp, Warning, TEXT("C++ interface"));
+}
+

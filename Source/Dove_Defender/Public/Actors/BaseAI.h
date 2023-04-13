@@ -4,15 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Actors/BaseCharacter.h"
+#include "Interfaces/InterfaceWeapon.h"
 #include "BaseAI.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DOVE_DEFENDER_API ABaseAI : public ABaseCharacter
+class DOVE_DEFENDER_API ABaseAI : public ABaseCharacter, public IInterfaceWeapon
 {
 	GENERATED_BODY()
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	
+public:
+	void Shoot() override;
 };
