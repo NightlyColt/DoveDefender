@@ -38,7 +38,7 @@ void URifleAnim::PlayShootAnim()
 	UE_LOG(LogTemp, Warning, TEXT("Played"));
 }
 
-void URifleAnim::PlayDeathAnim(float Ratio)
+void URifleAnim::PlayDeathAnim_Implementation(float Ratio)
 {
 	
 	CurrentDeath = GetRandAnim(DeathAnimations, DeathIndex);

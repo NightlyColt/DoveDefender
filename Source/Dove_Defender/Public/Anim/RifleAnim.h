@@ -31,8 +31,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void PlayShootAnim();
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Function")
 	void PlayDeathAnim(float Ratio);
+	void PlayDeathAnim_Implementation(float Ratio);
+
 	UFUNCTION(BlueprintCallable)
 	void PlayHitAnim();
 
