@@ -26,6 +26,8 @@ protected:
 	class UMyButton* QuitButton;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class UMainGameInstance* GameInstance;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	class USpacer* Spacer;
 	/*UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class MyButton* StartButton;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))

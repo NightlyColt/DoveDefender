@@ -19,6 +19,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	UFUNCTION()
+	virtual void CharacterDeathFinished();
 	UFUNCTION(BlueprintCallable)
 	void CharacterShoot();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

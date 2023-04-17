@@ -2,9 +2,25 @@
 
 
 #include "Actors/BaseAI.h"
-
+#include <Blueprint/AIBlueprintHelperLibrary.h>
+#include "AIController.h"
+#include "BrainComponent.h"
 void ABaseAI::Shoot()
 {
 	CharacterShoot();
+}
+
+void ABaseAI::CharacterDeath(float Ratio)
+{
+	Super::CharacterDeath(Ratio);
+	auto controller = UAIBlueprintHelperLibrary::GetAIController(this);
+
+	controller->BrainComponent->StopLogic("AI is Dead");
+}
+
+void ABaseAI::CharacterDeathFinished()
+{
+	Super::CharacterDeathFinished();
+	Destroy();
 }
 

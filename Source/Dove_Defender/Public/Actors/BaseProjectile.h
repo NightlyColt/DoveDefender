@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BaseProjectile.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMyCharacterDeathEvent);
 UCLASS()
 class DOVE_DEFENDER_API ABaseProjectile : public AActor
 {

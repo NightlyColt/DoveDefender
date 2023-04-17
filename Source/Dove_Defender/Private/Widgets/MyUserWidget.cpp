@@ -59,7 +59,10 @@ void UMyUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 			SetMaterialColor(DefaultColor);
 	}
 	else
+	{
+		EndPoint = End;
 		SetMaterialColor(DefaultColor);
+	}
 
 }
 

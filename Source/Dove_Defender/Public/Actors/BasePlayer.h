@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "Actors/BaseCharacter.h"
+#include "Anim/RifleAnim.h"
 #include "BasePlayer.generated.h"
-using namespace UP;
-/**
- * 
- */
+
+
 UCLASS()
 class DOVE_DEFENDER_API ABasePlayer : public ABaseCharacter
 {
 	GENERATED_BODY()
 protected:
 	virtual void BeginPlay() override;
+	void CharacterDeathFinished() override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
 	TSubclassOf<UUserWidget> WidgetClass;
 	class UMyUserWidget* HUD;
@@ -35,6 +35,8 @@ public:
 
 	virtual void CharacterDeath(float Ratio) override;
 	virtual void CharacterDamaged(float Ratio) override;
+	void WonLevel();
 	FRotator GetBaseAimRotation() const override;
 
+	FADispatcher OnDeathFinished;
 };

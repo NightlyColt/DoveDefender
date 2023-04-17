@@ -60,6 +60,7 @@ void ABaseCharacter::BeginPlay()
 			AnimBP->OnActionCompleteD.AddDynamic(this, &ABaseCharacter::StopShootAnim);
 			HealthComp->OnDamaged.AddDynamic(this, &ABaseCharacter::CharacterDamaged);
 			HealthComp->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
+			AnimBP->OnDeathFinished.AddDynamic(this, &ABaseCharacter::CharacterDeathFinished);
 		}
 
 	}
@@ -79,6 +80,10 @@ void ABaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
+}
+
+void ABaseCharacter::CharacterDeathFinished()
+{
 }
 
 void ABaseCharacter::CharacterShoot()

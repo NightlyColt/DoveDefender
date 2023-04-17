@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Interfaces/DemoInterface.h"
 #include "ActorWithInterfaces.generated.h"
-
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FTestDelegate);
 UCLASS()
 class DOVE_DEFENDER_API AActorWithInterfaces : public AActor, public IDemoInterface
 {

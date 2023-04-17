@@ -5,6 +5,7 @@
 #include "Components/Image.h"
 #include "Widgets/MyButton.h"
 #include "GameInstances/MainGameInstance.h"
+#include "Components/Spacer.h"
 UMainMenu::UMainMenu(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	

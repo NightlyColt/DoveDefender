@@ -42,6 +42,10 @@ void URifleAnim::PlayDeathAnim_Implementation(float Ratio)
 {
 	
 	CurrentDeath = GetRandAnim(DeathAnimations, DeathIndex);
+	float Time = CurrentDeath->GetPlayLength();
+
+	FTimerHandle Handle;
+	GetWorld()->GetTimerManager().SetTimer(Handle, this, &URifleAnim::DeathIsFinished, Time, false);
 }
 
 void URifleAnim::PlayHitAnim()
@@ -62,6 +66,11 @@ UAnimSequence* URifleAnim::GetRandAnim(TArray<UAnimSequence*>& Animations, int& 
 			break;
 	}
 	return NewAnim;
+}
+
+void URifleAnim::DeathIsFinished()
+{
+	OnDeathFinished.Broadcast();
 }
 
 void URifleAnim::PersonaUpdate_Implementation()

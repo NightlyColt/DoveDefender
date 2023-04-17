@@ -13,6 +13,8 @@
 #include <Kismet/KismetMathLibrary.h>
 #include "DrawDebugHelpers.h"
 #include "Actors/BaseWeapon.h"
+#include "GameFramework/PawnMovementComponent.h"
+#include "Components/CapsuleComponent.h"
 
 void ABasePlayer::BeginPlay()
 {
@@ -22,6 +24,12 @@ void ABasePlayer::BeginPlay()
 	HUD->AddToViewport(0);
 	HealthComp->OnDamaged.AddDynamic(this, &ABasePlayer::SetHealth);
 	HealthComp->OnDeath.AddDynamic(this, &ABasePlayer::SetHealth);
+}
+
+void ABasePlayer::CharacterDeathFinished()
+{
+	Super::CharacterDeathFinished();
+	OnDeathFinished.Broadcast();
 }
 
 ABasePlayer::ABasePlayer()
@@ -84,6 +92,14 @@ void ABasePlayer::CharacterDamaged(float Ratio)
 	HUD->SetHealth(Ratio);
 }
 
+void ABasePlayer::WonLevel()
+{
+	DisableInput(PlayerController);
+	HUD->RemoveFromParent();
+	Movement->StopMovementImmediately();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
 FRotator ABasePlayer::GetBaseAimRotation() const
 {
 	FVector Destination;
@@ -106,5 +122,7 @@ FRotator ABasePlayer::GetBaseAimRotation() const
 	}
 
 	FVector Result = Destination - CurrentWeapon->SkeletalMesh->GetSocketLocation("MuzzleFlashSocket");
+	/*DrawDebugLine(GetWorld(), CurrentWeapon->SkeletalMesh->GetSocketLocation("MuzzleFlashSocket"), Destination, FColor::Green, true, -1, 0, 1);*/
+
 	return UKismetMathLibrary::MakeRotFromX(Result);
 }

@@ -13,5 +13,6 @@ UCLASS()
 class DOVE_DEFENDER_API AGamePlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+protected:
+	virtual void BeginPlay() override;
 };

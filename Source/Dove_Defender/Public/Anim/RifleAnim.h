@@ -10,6 +10,7 @@
  * 
  */
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FADispatcher);
+
 UCLASS()
 class DOVE_DEFENDER_API URifleAnim : public UAnimInstance
 {
@@ -48,9 +49,14 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Direction;
 
+	void DeathIsFinished();
+
 public:
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FADispatcher OnActionCompleteD;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
+	FADispatcher OnDeathFinished;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
 	class UAnimSequenceBase* ShootAnim;

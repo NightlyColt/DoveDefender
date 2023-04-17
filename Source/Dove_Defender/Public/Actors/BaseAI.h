@@ -14,7 +14,9 @@ UCLASS()
 class DOVE_DEFENDER_API ABaseAI : public ABaseCharacter, public IInterfaceWeapon
 {
 	GENERATED_BODY()
-	
+	void CharacterDeathFinished() override;
+
 public:
 	void Shoot() override;
+	void CharacterDeath(float Ratio) override;
 };
