@@ -23,6 +23,11 @@ protected:
 	virtual void CharacterDeathFinished();
 	UFUNCTION(BlueprintCallable)
 	void CharacterShoot();
+	void CharacterReload();
+	virtual void CharacterAmmoChanged(float Current, float Max);
+	UFUNCTION()
+	virtual void CharacterWeaponActionEnded();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UChildActorComponent* WeaponChild;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

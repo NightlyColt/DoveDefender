@@ -7,6 +7,7 @@
 #include "BaseWeapon.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEDispatcher);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChangedEvent, float, CurrentAmmo, float, MaxAmmo);
 UCLASS()
 class DOVE_DEFENDER_API ABaseWeapon : public AActor
 {
@@ -20,7 +21,12 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	// Declare a skeletal mesh component for the weapon's mesh
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	float Current;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float Max;
+
+	void UseAmmo();
 	
 
 public:
@@ -30,6 +36,12 @@ public:
 	// Declare a delegate instance for when the weapon is fired
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FEDispatcher OnShoot;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
+	FOnAmmoChangedEvent OnAmmoChanged;
+
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
+	FEDispatcher OnStartReload;
 
 	// Declare a function to check if the weapon can fire
 	UFUNCTION(BlueprintCallable)
@@ -55,5 +67,8 @@ public:
 	// Declare a function to fire the weapon
 	void Shoot();
 
+	void Reload();
+
+	void CheckStartReload();
 
 };

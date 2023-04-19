@@ -33,6 +33,13 @@ void ABaseWeapon::BeginPlay()
 	OwningActor = Cast<APawn>(GetParentActor());
 	if (nullptr == OwningActor)
 		UE_LOG(LogTemp, Error, TEXT("No parent attached"));
+	Reload();
+}
+
+void ABaseWeapon::UseAmmo()
+{
+	Current = FMath::Clamp<float>(Current - 1, 0, Max);
+	OnAmmoChanged.Broadcast(Current, Max);
 }
 
 bool ABaseWeapon::CanShoot() const
@@ -62,6 +69,22 @@ void ABaseWeapon::Shoot()
 		AActor* proj = GetWorld()->SpawnActor<AActor>(ABaseProjectile::StaticClass(), Transforms, Params);
 		DoShoot = true;
 		OnShoot.Broadcast(); // Call
+		UseAmmo();
+	}
+}
+
+void ABaseWeapon::Reload()
+{
+	Current = Max;
+	OnAmmoChanged.Broadcast(Current, Max);
+}
+
+void ABaseWeapon::CheckStartReload()
+{
+	if (!DoShoot)
+	{
+		DoShoot = true;
+		OnStartReload.Broadcast();
 	}
 }
 

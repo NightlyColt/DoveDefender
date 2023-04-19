@@ -24,7 +24,7 @@ void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 		Direction = CalculateDirection(Velocity, Rotation);
 	}
 	else
-		PersonaUpdate_Implementation();
+		PersonaUpdate();
 }
 
 void URifleAnim::OnActionComplete()

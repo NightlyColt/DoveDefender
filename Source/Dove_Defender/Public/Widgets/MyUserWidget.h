@@ -24,6 +24,12 @@ protected:
 	class UProgressBar* Health;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UImage* Reticle;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UImage* WeaponIcon;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* CurrentAmmo;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UTextBlock* MaxAmmo;
 
 	UMaterialInstanceDynamic* DynamicMaterial;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -39,4 +45,5 @@ public:
 	bool GetAimedPoint(bool& _Valid, FVector& _HitLocation, FVector& _EndPoint) const;
 	UFUNCTION(BlueprintCallable)
 	void SetHealth(float ratio);
+	void SetAmmo(float Current, float Max);
 };

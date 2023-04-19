@@ -8,6 +8,8 @@
 #include "Materials/MaterialInterface.h"
 #include <Blueprint/SlateBlueprintLibrary.h>
 #include <Kismet/KismetSystemLibrary.h>
+#include "Components/TextBlock.h"
+#include <Kismet/KismetTextLibrary.h>
 
 UMyUserWidget::UMyUserWidget(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
@@ -27,6 +29,8 @@ void UMyUserWidget::NativeConstruct()
 		Reticle->SetBrushFromMaterial(DynamicMaterial);
 		SetMaterialColor(DefaultColor);
 	}
+	CurrentAmmo->SetText(FText::FromString(TEXT("100")));
+	MaxAmmo->SetText(FText::FromString(TEXT("100")));
 }
 bool UMyUserWidget::GetAimedPoint(bool& _Valid, FVector& _HitLocation, FVector& _EndPoint) const
 {
@@ -90,4 +94,11 @@ bool UMyUserWidget::GetLinePoints(FVector& _StartPoint, FVector& _EndPoint) cons
 void UMyUserWidget::SetHealth(float ratio)
 {
 	Health->SetPercent(ratio);
+}
+
+void UMyUserWidget::SetAmmo(float Current, float Max)
+{
+	CurrentAmmo->SetText(UKismetTextLibrary::Conv_FloatToText(Current, ERoundingMode::ToZero));
+	MaxAmmo->SetText(UKismetTextLibrary::Conv_FloatToText(Max, ERoundingMode::ToZero));
+
 }

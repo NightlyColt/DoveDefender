@@ -57,10 +57,11 @@ void ABaseCharacter::BeginPlay()
 		else
 		{
 			CurrentWeapon->OnShoot.AddDynamic(this, &ABaseCharacter::PlayShootAnim);
-			AnimBP->OnActionCompleteD.AddDynamic(this, &ABaseCharacter::StopShootAnim);
+			AnimBP->OnActionCompleteD.AddDynamic(this, &ABaseCharacter::CharacterWeaponActionEnded);
 			HealthComp->OnDamaged.AddDynamic(this, &ABaseCharacter::CharacterDamaged);
 			HealthComp->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
 			AnimBP->OnDeathFinished.AddDynamic(this, &ABaseCharacter::CharacterDeathFinished);
+			CurrentWeapon->OnAmmoChanged.AddDynamic(this, &ABaseCharacter::CharacterAmmoChanged);
 		}
 
 	}
@@ -92,6 +93,20 @@ void ABaseCharacter::CharacterShoot()
 		CurrentWeapon->Shoot();
 	else
 		UE_LOG(LogTemp, Error, TEXT("There's No Weapon To Use"));
+}
+
+void ABaseCharacter::CharacterReload()
+{
+	CurrentWeapon->CheckStartReload();
+}
+
+void ABaseCharacter::CharacterAmmoChanged(float Current, float Max)
+{
+}
+
+void ABaseCharacter::CharacterWeaponActionEnded()
+{
+	CurrentWeapon->StopAnimation();
 }
 
 void ABaseCharacter::PlayShootAnim()
