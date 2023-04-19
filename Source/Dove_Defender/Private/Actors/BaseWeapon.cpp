@@ -22,7 +22,8 @@ ABaseWeapon::ABaseWeapon()
 	}
 
 	Projectile = ABaseProjectile::StaticClass();
-
+	Current = 0;
+	Max = 5;
 }
 
 // Called when the game starts or when spawned
@@ -44,7 +45,7 @@ void ABaseWeapon::UseAmmo()
 
 bool ABaseWeapon::CanShoot() const
 {
-	return !DoShoot && !Dead;
+	return !DoShoot && !Dead && (Current > 0);
 }
 
 void ABaseWeapon::StopAnimation()

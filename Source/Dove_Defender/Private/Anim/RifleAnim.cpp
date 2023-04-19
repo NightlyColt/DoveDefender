@@ -38,6 +38,11 @@ void URifleAnim::PlayShootAnim()
 	UE_LOG(LogTemp, Warning, TEXT("Played"));
 }
 
+void URifleAnim::PlayReloadAnim()
+{
+	PlaySlotAnimationAsDynamicMontage(ReloadAnim, "Action");
+}
+
 void URifleAnim::PlayDeathAnim_Implementation(float Ratio)
 {
 	
@@ -87,4 +92,11 @@ void URifleAnim::PersonaUpdate_Implementation()
 		DebugDamaged = !DebugDamaged;
 		PlayHitAnim();
 	}
+	else if (DebugReload)
+	{
+		DebugReload = !DebugReload;
+		PlayReloadAnim();
+	}
+
+
 }

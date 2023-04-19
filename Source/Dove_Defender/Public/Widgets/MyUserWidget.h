@@ -45,5 +45,6 @@ public:
 	bool GetAimedPoint(bool& _Valid, FVector& _HitLocation, FVector& _EndPoint) const;
 	UFUNCTION(BlueprintCallable)
 	void SetHealth(float ratio);
+	UFUNCTION(BlueprintCallable)
 	void SetAmmo(float Current, float Max);
 };

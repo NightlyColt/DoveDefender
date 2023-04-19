@@ -62,6 +62,8 @@ void ABaseCharacter::BeginPlay()
 			HealthComp->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
 			AnimBP->OnDeathFinished.AddDynamic(this, &ABaseCharacter::CharacterDeathFinished);
 			CurrentWeapon->OnAmmoChanged.AddDynamic(this, &ABaseCharacter::CharacterAmmoChanged);
+			CurrentWeapon->OnStartReload.AddDynamic(this, &ABaseCharacter::PlayReloadAnim);
+			AnimBP->OnReloadWeapon.AddDynamic(this, &ABaseCharacter::Reload);
 		}
 
 	}
@@ -107,6 +109,16 @@ void ABaseCharacter::CharacterAmmoChanged(float Current, float Max)
 void ABaseCharacter::CharacterWeaponActionEnded()
 {
 	CurrentWeapon->StopAnimation();
+}
+
+void ABaseCharacter::PlayReloadAnim()
+{
+	AnimBP->PlayReloadAnim();
+}
+
+void ABaseCharacter::Reload()
+{
+	CurrentWeapon->Reload();
 }
 
 void ABaseCharacter::PlayShootAnim()

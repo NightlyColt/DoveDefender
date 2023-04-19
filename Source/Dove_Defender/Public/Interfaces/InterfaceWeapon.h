@@ -23,4 +23,5 @@ class DOVE_DEFENDER_API IInterfaceWeapon
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual void Shoot() = 0;
+	virtual void Reload() = 0;
 };

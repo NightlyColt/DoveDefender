@@ -24,10 +24,15 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void CharacterShoot();
 	void CharacterReload();
+	UFUNCTION()
 	virtual void CharacterAmmoChanged(float Current, float Max);
 	UFUNCTION()
 	virtual void CharacterWeaponActionEnded();
 
+	UFUNCTION()
+	void PlayReloadAnim();
+	UFUNCTION()
+	void Reload();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UChildActorComponent* WeaponChild;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

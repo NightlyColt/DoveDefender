@@ -24,12 +24,19 @@ void ABasePlayer::BeginPlay()
 	HUD->AddToViewport(0);
 	HealthComp->OnDamaged.AddDynamic(this, &ABasePlayer::SetHealth);
 	HealthComp->OnDeath.AddDynamic(this, &ABasePlayer::SetHealth);
+	CurrentWeapon->Reload();
 }
 
 void ABasePlayer::CharacterDeathFinished()
 {
 	Super::CharacterDeathFinished();
 	OnDeathFinished.Broadcast();
+}
+
+void ABasePlayer::CharacterAmmoChanged(float Current, float Max)
+{
+	Super::CharacterAmmoChanged(Current, Max);
+	HUD->SetAmmo(Current, Max);
 }
 
 ABasePlayer::ABasePlayer()
@@ -61,6 +68,7 @@ void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAxis("MoveSideways", this, &ABasePlayer::MoveRight);
 
 	PlayerInputComponent->BindAction("Shoot", EInputEvent::IE_Pressed, this, &ABasePlayer::CharacterShoot);
+	PlayerInputComponent->BindAction("Reload", EInputEvent::IE_Pressed, this, &ABasePlayer::CharacterReload);
 
 }
 

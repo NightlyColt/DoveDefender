@@ -5,9 +5,16 @@
 #include <Blueprint/AIBlueprintHelperLibrary.h>
 #include "AIController.h"
 #include "BrainComponent.h"
+#include "BehaviorTree/BlackboardComponent.h"
+#include "Actors/BaseWeapon.h"
 void ABaseAI::Shoot()
 {
 	CharacterShoot();
+}
+
+void ABaseAI::Reload()
+{
+	CharacterReload();
 }
 
 void ABaseAI::CharacterDeath(float Ratio)
@@ -18,9 +25,44 @@ void ABaseAI::CharacterDeath(float Ratio)
 	controller->BrainComponent->StopLogic("AI is Dead");
 }
 
+void ABaseAI::CharacterWeaponActionEnded()
+{
+	Super::CharacterWeaponActionEnded();
+	UAIBlueprintHelperLibrary::SendAIMessage(this, "ActionFinished", nullptr, true);
+}
+
+void ABaseAI::CharacterAmmoChanged(float Current, float Max)
+{
+	Super::CharacterAmmoChanged(Current, Max);
+	auto comp = UAIBlueprintHelperLibrary::GetAIController(this);
+	if (comp)
+	{
+		auto bComp = comp->GetBlackboardComponent();
+		if (bComp)
+		{
+			AmmoKey = "Ammo";
+			bComp->SetValueAsFloat(AmmoKey, Current);
+		}
+		else
+		{
+			UE_LOG(LogTemp, Error, TEXT("BlackBoard Couldn't be found"));
+		}
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("AIController Couldn't be found"));
+	}
+}
+
 void ABaseAI::CharacterDeathFinished()
 {
 	Super::CharacterDeathFinished();
 	Destroy();
+}
+
+void ABaseAI::BeginPlay()
+{
+	Super::BeginPlay();
+	CurrentWeapon->Reload();
 }
 

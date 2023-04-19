@@ -100,5 +100,4 @@ void UMyUserWidget::SetAmmo(float Current, float Max)
 {
 	CurrentAmmo->SetText(UKismetTextLibrary::Conv_FloatToText(Current, ERoundingMode::ToZero));
 	MaxAmmo->SetText(UKismetTextLibrary::Conv_FloatToText(Max, ERoundingMode::ToZero));
-
 }

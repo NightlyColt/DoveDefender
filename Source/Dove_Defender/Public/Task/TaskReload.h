@@ -4,20 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "TaskTargetShoot.generated.h"
+#include "TaskReload.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DOVE_DEFENDER_API UTaskTargetShoot : public UBTTaskNode
+class DOVE_DEFENDER_API UTaskReload : public UBTTaskNode
 {
 	GENERATED_BODY()
-protected:
 	AAIController* OwnerController;
 	APawn* ControlledPawn;
-	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+	EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
 	void OnMessage(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, FName Message, int32 RequestID, bool bSuccess) override;
-
-
 };
