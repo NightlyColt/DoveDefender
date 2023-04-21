@@ -2,6 +2,7 @@
 
 
 #include "Comp/HealthComponent.h"
+#include "DamageTypes/DamageTypeFire.h"
 
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -33,6 +34,13 @@ void UHealthComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
+bool UHealthComponent::IsFullHealth() const
+{
+	if (Current / Max > .99)
+		return true;
+	return false;
+}
+
 void UHealthComponent::SetStartHealth()
 {
 	Current = Max;
@@ -40,12 +48,21 @@ void UHealthComponent::SetStartHealth()
 
 void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
+	
 	Current = FMath::Clamp<float>(Current - Damage, 0, Max);
 	if (Current > 0)
 	{
 		float ratio = Current / Max;
+		if (Damage > 0)
+		{
 
-		OnDamaged.Broadcast(ratio);
+			OnDamaged.Broadcast(ratio);
+		}
+		else
+		{
+			OnHealthGained.Broadcast(ratio);
+		}
+
 	}
 	else 
 	{

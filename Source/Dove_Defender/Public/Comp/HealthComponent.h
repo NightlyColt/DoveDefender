@@ -34,9 +34,13 @@ public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FEOnDispatcher OnDeath;
+	
+	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
+	FEOnDispatcher OnHealthGained;
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
+	UFUNCTION(BlueprintCallable)
+	bool IsFullHealth() const;
 	void SetStartHealth();
 
 	UFUNCTION()

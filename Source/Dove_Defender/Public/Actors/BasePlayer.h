@@ -15,7 +15,9 @@ class DOVE_DEFENDER_API ABasePlayer : public ABaseCharacter
 protected:
 	virtual void BeginPlay() override;
 	void CharacterDeathFinished() override;
+	void CharacterHeal(float Ratio) override;
 	void CharacterAmmoChanged(float Current, float Max) override;
+	bool CanPickupHealth() override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
 	TSubclassOf<UUserWidget> WidgetClass;
 	class UMyUserWidget* HUD;

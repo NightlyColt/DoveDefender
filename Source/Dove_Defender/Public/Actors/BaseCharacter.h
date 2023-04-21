@@ -4,10 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interfaces/InterfacePickup.h"
 #include "BaseCharacter.generated.h"
 
 UCLASS()
-class  DOVE_DEFENDER_API ABaseCharacter : public ACharacter
+class  DOVE_DEFENDER_API ABaseCharacter : public ACharacter, public IInterfacePickup
 {
 	GENERATED_BODY()
 
@@ -28,6 +29,9 @@ protected:
 	virtual void CharacterAmmoChanged(float Current, float Max);
 	UFUNCTION()
 	virtual void CharacterWeaponActionEnded();
+	UFUNCTION()
+	virtual void CharacterHeal(float Ratio);
+	virtual bool CanPickupHealth();
 
 	UFUNCTION()
 	void PlayReloadAnim();
@@ -62,5 +66,4 @@ public:
 	virtual void CharacterDeath(float Ratio);
 	UFUNCTION()
 	virtual void CharacterDamaged(float Ratio);
-
 };

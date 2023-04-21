@@ -33,10 +33,21 @@ void ABasePlayer::CharacterDeathFinished()
 	OnDeathFinished.Broadcast();
 }
 
+void ABasePlayer::CharacterHeal(float Ratio)
+{
+	Super::CharacterHeal(Ratio);
+	HUD->SetHealth(Ratio);
+}
+
 void ABasePlayer::CharacterAmmoChanged(float Current, float Max)
 {
 	Super::CharacterAmmoChanged(Current, Max);
 	HUD->SetAmmo(Current, Max);
+}
+
+bool ABasePlayer::CanPickupHealth()
+{
+	return !HealthComp->IsFullHealth();
 }
 
 ABasePlayer::ABasePlayer()

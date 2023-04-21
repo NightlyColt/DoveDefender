@@ -64,6 +64,7 @@ void ABaseCharacter::BeginPlay()
 			CurrentWeapon->OnAmmoChanged.AddDynamic(this, &ABaseCharacter::CharacterAmmoChanged);
 			CurrentWeapon->OnStartReload.AddDynamic(this, &ABaseCharacter::PlayReloadAnim);
 			AnimBP->OnReloadWeapon.AddDynamic(this, &ABaseCharacter::Reload);
+			HealthComp->OnHealthGained.AddDynamic(this, &ABaseCharacter::CharacterHeal);
 		}
 
 	}
@@ -111,6 +112,10 @@ void ABaseCharacter::CharacterWeaponActionEnded()
 	CurrentWeapon->StopAnimation();
 }
 
+void ABaseCharacter::CharacterHeal(float Ratio)
+{
+}
+
 void ABaseCharacter::PlayReloadAnim()
 {
 	AnimBP->PlayReloadAnim();
@@ -142,5 +147,10 @@ void ABaseCharacter::CharacterDeath(float Ratio)
 void ABaseCharacter::CharacterDamaged(float Ratio)
 {
 	AnimBP->PlayHitAnim();
+}
+
+bool ABaseCharacter::CanPickupHealth()
+{
+	return false;
 }
 
