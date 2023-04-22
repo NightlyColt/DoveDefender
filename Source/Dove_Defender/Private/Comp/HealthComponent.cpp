@@ -3,7 +3,7 @@
 
 #include "Comp/HealthComponent.h"
 #include "DamageTypes/DamageTypeFire.h"
-
+#include "Interfaces/InterfaceEffects.h"
 // Sets default values for this component's properties
 UHealthComponent::UHealthComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -48,7 +48,11 @@ void UHealthComponent::SetStartHealth()
 
 void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
 {
-	
+	const IInterfaceEffects* effect = Cast<IInterfaceEffects>(DamageType);
+	if (effect)
+	{
+		effect->StartEffect(DamagedActor, DamageCauser);
+	}
 	Current = FMath::Clamp<float>(Current - Damage, 0, Max);
 	if (Current > 0)
 	{

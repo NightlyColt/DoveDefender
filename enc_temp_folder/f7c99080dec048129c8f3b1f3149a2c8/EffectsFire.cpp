@@ -20,7 +20,7 @@ AEffectsFire::AEffectsFire()
 		ParticleSystem->SetTemplate(MyParticleSystem);
 	}
 
-	DamagePerSecond = 2.f;
+	DamagePerSecond = 6.f;
 	InitialLifeSpan = 2;
 }
 

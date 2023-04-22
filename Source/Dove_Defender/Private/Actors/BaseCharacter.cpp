@@ -12,7 +12,7 @@
 #include <Kismet/KismetMathLibrary.h>
 #include <Blueprint/WidgetBlueprintLibrary.h>
 #include "Widgets/MyUserWidget.h"
-
+#include "Comp/EffectComponent.h"
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
@@ -26,6 +26,9 @@ ABaseCharacter::ABaseCharacter()
 	// Setup Mesh
 	GetMesh()->SetWorldLocation(FVector(0.f, 0.f, -90.f));
 	HealthComp = CreateDefaultSubobject<UHealthComponent>("Health_Component");
+	EffectComp = CreateDefaultSubobject<UEffectComponent>("EffectComponent");
+	EffectComp->SetupAttachment(GetMesh());
+	EffectComp->SetWorldLocation(FVector(0, 0, 140));
 
 	Movement = GetMovementComponent();
 }

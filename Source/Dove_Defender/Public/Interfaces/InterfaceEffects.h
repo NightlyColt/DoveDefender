@@ -22,5 +22,5 @@ class DOVE_DEFENDER_API IInterfaceEffects
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual void StartEffect(AActor* DamageActor, AActor* DamageCauser) = 0;
+	virtual void StartEffect(AActor* DamageActor, AActor* DamageCauser) const = 0;
 };

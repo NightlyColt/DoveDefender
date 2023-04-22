@@ -46,6 +46,8 @@ protected:
 		
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UHealthComponent* HealthComp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	class UEffectComponent* EffectComp;
 
 	UPawnMovementComponent* Movement;
 

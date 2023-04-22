@@ -16,5 +16,5 @@ class DOVE_DEFENDER_API UDamageTypeFire : public UDamageType, public IInterfaceE
 	GENERATED_BODY()
 	
 public:
-	void StartEffect(AActor* DamageActor, AActor* DamageCauser) override;
+	void StartEffect(AActor* DamageActor, AActor* DamageCauser) const override;
 };

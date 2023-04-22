@@ -3,11 +3,12 @@
 
 #include "DamageTypes/DamageTypeFire.h"
 #include "Comp/EffectComponent.h"
-void UDamageTypeFire::StartEffect(AActor* DamageActor, AActor* DamageCauser)
+void UDamageTypeFire::StartEffect(AActor* DamageActor, AActor* DamageCauser) const
 {
-	auto temp = Cast<UEffectComponent>(DamageActor->GetComponentByClass(UEffectComponent::StaticClass()));
-	if (temp)
+	if (DamageActor->GetComponentByClass(UEffectComponent::StaticClass()) != nullptr)
 	{
-		temp->StartEffect(temp->Fire, DamageCauser);
+		auto temp = Cast<UEffectComponent>(DamageActor->GetComponentByClass(UEffectComponent::StaticClass()));
+		if (temp)
+			temp->StartEffect(temp->Fire, DamageCauser);
 	}
 }
