@@ -18,6 +18,9 @@ protected:
 	void CharacterHeal(float Ratio) override;
 	void CharacterAmmoChanged(float Current, float Max) override;
 	bool CanPickupHealth() override;
+	void MoveForward(float Value);
+	void MoveRight(float Value);
+	void SwapChildActorClass();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
 	TSubclassOf<UUserWidget> WidgetClass;
 	class UMyUserWidget* HUD;
@@ -27,11 +30,16 @@ protected:
 	class UCameraComponent* Camera;
 
 	APlayerController* PlayerController;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<class AStickyWeapon> StickyGun;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<URifleAnim> RifleAnim;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<URifleAnim> StickyWeaponAnim;
 public:
 	ABasePlayer();
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	void MoveForward(float Value);
-	void MoveRight(float Value);
+	
 
 	UFUNCTION()
 	void SetHealth(float Ratio);

@@ -13,6 +13,8 @@
 #include <Blueprint/WidgetBlueprintLibrary.h>
 #include "Widgets/MyUserWidget.h"
 #include "Comp/EffectComponent.h"
+#include "Actors/StickyWeapon.h"
+
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
@@ -30,6 +32,7 @@ ABaseCharacter::ABaseCharacter()
 	EffectComp->SetupAttachment(GetMesh());
 	EffectComp->SetWorldLocation(FVector(0, 0, 140));
 
+	WeaponClass = ABaseWeapon::StaticClass();
 	Movement = GetMovementComponent();
 }
 
@@ -37,40 +40,8 @@ ABaseCharacter::ABaseCharacter()
 void ABaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	TSubclassOf<ABaseWeapon> WeaponClass;
-	WeaponClass = ABaseWeapon::StaticClass();
-
-	WeaponChild->SetChildActorClass(WeaponClass);
-	
-	CurrentWeapon = Cast<ABaseWeapon>(WeaponChild->GetChildActor());
-
-	if (nullptr == CurrentWeapon)
-	{
-		UE_LOG(LogTemp, Error, TEXT("There's No Weapon To Use"));
-	}
-	else 
-	{
-		UE_LOG(LogTemp, Error, TEXT("Found a Weapon"));
-
-		AnimBP = Cast<URifleAnim>(GetMesh()->GetAnimInstance());
-		if (nullptr == AnimBP)
-		{
-			UE_LOG(LogTemp, Error, TEXT("Animation Class Unvalid"));
-		}
-		else
-		{
-			CurrentWeapon->OnShoot.AddDynamic(this, &ABaseCharacter::PlayShootAnim);
-			AnimBP->OnActionCompleteD.AddDynamic(this, &ABaseCharacter::CharacterWeaponActionEnded);
-			HealthComp->OnDamaged.AddDynamic(this, &ABaseCharacter::CharacterDamaged);
-			HealthComp->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
-			AnimBP->OnDeathFinished.AddDynamic(this, &ABaseCharacter::CharacterDeathFinished);
-			CurrentWeapon->OnAmmoChanged.AddDynamic(this, &ABaseCharacter::CharacterAmmoChanged);
-			CurrentWeapon->OnStartReload.AddDynamic(this, &ABaseCharacter::PlayReloadAnim);
-			AnimBP->OnReloadWeapon.AddDynamic(this, &ABaseCharacter::Reload);
-			HealthComp->OnHealthGained.AddDynamic(this, &ABaseCharacter::CharacterHeal);
-		}
-
-	}
+	SetReferences();
+	BindEvents();
 }
 
 
@@ -155,5 +126,58 @@ void ABaseCharacter::CharacterDamaged(float Ratio)
 bool ABaseCharacter::CanPickupHealth()
 {
 	return false;
+}
+
+void ABaseCharacter::CharacterSwapWeapon()
+{
+	SetReferences();
+}
+
+void ABaseCharacter::SetReferences()
+{
+	WeaponChild->SetChildActorClass(WeaponClass);
+
+	CurrentWeapon = Cast<ABaseWeapon>(WeaponChild->GetChildActor());
+
+	if (nullptr == CurrentWeapon)
+	{
+		UE_LOG(LogTemp, Error, TEXT("There's No Weapon To Use"));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Found a Weapon"));
+
+		AnimBP = Cast<URifleAnim>(GetMesh()->GetAnimInstance());
+		if (nullptr == AnimBP)
+		{
+			UE_LOG(LogTemp, Error, TEXT("Animation Class Unvalid"));
+		}
+	}
+}
+
+void ABaseCharacter::BindEvents()
+{
+	// Check if the health component is valid
+	if (HealthComp)
+	{
+		HealthComp->OnDamaged.AddDynamic(this, &ABaseCharacter::CharacterDamaged);
+		HealthComp->OnDeath.AddDynamic(this, &ABaseCharacter::CharacterDeath);
+		HealthComp->OnHealthGained.AddDynamic(this, &ABaseCharacter::CharacterHeal);
+		BindWeaponAndAnimationEvents();
+	}
+}
+
+void ABaseCharacter::BindWeaponAndAnimationEvents()
+{
+	// Check if current weapon and animbp are valid
+	if (CurrentWeapon && AnimBP)
+	{
+		CurrentWeapon->OnShoot.AddDynamic(this, &ABaseCharacter::PlayShootAnim);
+		AnimBP->OnActionCompleteD.AddDynamic(this, &ABaseCharacter::CharacterWeaponActionEnded);
+		AnimBP->OnDeathFinished.AddDynamic(this, &ABaseCharacter::CharacterDeathFinished);
+		CurrentWeapon->OnAmmoChanged.AddDynamic(this, &ABaseCharacter::CharacterAmmoChanged);
+		CurrentWeapon->OnStartReload.AddDynamic(this, &ABaseCharacter::PlayReloadAnim);
+		AnimBP->OnReloadWeapon.AddDynamic(this, &ABaseCharacter::Reload);
+	}
 }
 

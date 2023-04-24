@@ -15,7 +15,7 @@
 #include "Actors/BaseWeapon.h"
 #include "GameFramework/PawnMovementComponent.h"
 #include "Components/CapsuleComponent.h"
-
+#include "Actors/StickyWeapon.h"
 void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
@@ -65,7 +65,8 @@ ABasePlayer::ABasePlayer()
 	// Setup Mesh
 	GetMesh()->SetWorldLocation(FVector(0.f, 0.f, -90.f));
 
-
+	Weapon1 = ABaseWeapon::StaticClass();
+	Weapon2 = AStickyWeapon::StaticClass();
 }
 
 void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -80,7 +81,7 @@ void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputCo
 
 	PlayerInputComponent->BindAction("Shoot", EInputEvent::IE_Pressed, this, &ABasePlayer::CharacterShoot);
 	PlayerInputComponent->BindAction("Reload", EInputEvent::IE_Pressed, this, &ABasePlayer::CharacterReload);
-
+	PlayerInputComponent->BindAction("SwapWeapon", EInputEvent::IE_Pressed, this, &ABasePlayer::SwapChildActorClass);
 }
 
 void ABasePlayer::MoveForward(float Value)
@@ -91,6 +92,21 @@ void ABasePlayer::MoveForward(float Value)
 void ABasePlayer::MoveRight(float Value)
 {
 	AddMovementInput(GetActorRightVector(), Value);
+}
+
+void ABasePlayer::SwapChildActorClass()
+{
+	if (WeaponClass == Weapon1)
+	{
+		WeaponClass = Weapon2;
+		GetMesh()->SetAnimInstanceClass(StickyWeaponAnim);
+	}
+	else
+	{
+		WeaponClass = Weapon1;
+		GetMesh()->SetAnimInstanceClass(RifleAnim);
+	}
+	CharacterSwapWeapon();
 }
 
 void ABasePlayer::SetHealth(float Ratio)

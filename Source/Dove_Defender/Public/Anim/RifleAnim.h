@@ -17,7 +17,8 @@ class DOVE_DEFENDER_API URifleAnim : public UAnimInstance
 	GENERATED_BODY()
 public:
 	URifleAnim();
-	void NativeUpdateAnimation(float DeltaSeconds) override;
+	UFUNCTION(BlueprintCallable)
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 public:
 	///////////////////////////////////////////////////////////////////////////////////
@@ -39,8 +40,10 @@ public:
 	void PlayDeathAnim(float Ratio);
 	void PlayDeathAnim_Implementation(float Ratio);
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void PlayHitAnim();
+	void PlayHitAnim_Implementation();
+
 
 	UAnimSequence* GetRandAnim(TArray<UAnimSequence*>& Animations, int& Index);
 	////////////////////////////////////////////////////////////////////////////////////

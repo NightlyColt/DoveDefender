@@ -53,7 +53,7 @@ void URifleAnim::PlayDeathAnim_Implementation(float Ratio)
 	GetWorld()->GetTimerManager().SetTimer(Handle, this, &URifleAnim::DeathIsFinished, Time, false);
 }
 
-void URifleAnim::PlayHitAnim()
+void URifleAnim::PlayHitAnim_Implementation()
 {
 	PlaySlotAnimationAsDynamicMontage(HitAnimation, "Damaged");																
 }

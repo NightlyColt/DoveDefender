@@ -32,6 +32,11 @@ protected:
 	UFUNCTION()
 	virtual void CharacterHeal(float Ratio);
 	virtual bool CanPickupHealth();
+	virtual void CharacterSwapWeapon();
+	void SetReferences();
+	void BindEvents();
+	void BindWeaponAndAnimationEvents();
+
 
 	UFUNCTION()
 	void PlayReloadAnim();
@@ -41,6 +46,11 @@ protected:
 	class UChildActorComponent* WeaponChild;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class ABaseWeapon* CurrentWeapon;
+	TSubclassOf<ABaseWeapon> WeaponClass;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<ABaseWeapon> Weapon1;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	TSubclassOf<class AStickyWeapon> Weapon2;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class URifleAnim* AnimBP;
 		
