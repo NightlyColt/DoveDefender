@@ -25,9 +25,15 @@ protected:
 	float Current;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Max;
-
+	// Declare a reference to the projectile that the weapon fires
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
+	TSubclassOf<AActor> Projectile;
 	void UseAmmo();
 	
+	struct FWeaponSync
+	{
+		TSubclassOf<class UAnimRifle> WeaponInfo;
+	} AnimInfo;
 
 public:
 
@@ -59,10 +65,6 @@ public:
 	// Declare a reference to the owning actor of the weapon
 	UPROPERTY(BlueprintReadOnly)
 	APawn* OwningActor;
-
-	// Declare a reference to the projectile that the weapon fires
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
-	TSubclassOf<AActor> Projectile;
 
 	// Declare a function to fire the weapon
 	void Shoot();

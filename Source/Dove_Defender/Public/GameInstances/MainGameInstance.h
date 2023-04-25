@@ -25,6 +25,7 @@ protected:
 	void LoadLevelSafe(int index);
 
 public:
+	UMainGameInstance();
 	UFUNCTION(BlueprintCallable)
 	void LoadFirstLevel();
 	UFUNCTION(BlueprintCallable)

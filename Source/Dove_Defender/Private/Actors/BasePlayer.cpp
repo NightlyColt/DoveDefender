@@ -50,6 +50,8 @@ bool ABasePlayer::CanPickupHealth()
 	return !HealthComp->IsFullHealth();
 }
 
+
+
 ABasePlayer::ABasePlayer()
 {
 	// Setup Spring
@@ -160,4 +162,18 @@ FRotator ABasePlayer::GetBaseAimRotation() const
 	/*DrawDebugLine(GetWorld(), CurrentWeapon->SkeletalMesh->GetSocketLocation("MuzzleFlashSocket"), Destination, FColor::Green, true, -1, 0, 1);*/
 
 	return UKismetMathLibrary::MakeRotFromX(Result);
+}
+
+void ABasePlayer::CharacterSwapWeapon()
+{
+	Super::CharacterSwapWeapon();
+	// this is temporary go back with an actual struct
+	if (WeaponClass == Weapon1)
+	{
+		HUD->SetIconIndex(0);
+	}
+	else
+	{
+		HUD->SetIconIndex(1);
+	}
 }

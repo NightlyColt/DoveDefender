@@ -2,7 +2,7 @@
 
 
 #include "Actors/StickyWeapon.h"
-
+#include <Actors/StickyBomb.h>
 AStickyWeapon::AStickyWeapon()
 {
 	// Load the skeletal mesh from memory
@@ -11,4 +11,8 @@ AStickyWeapon::AStickyWeapon()
 	{
 		SkeletalMesh->SetSkeletalMesh(SkeletalMeshAsset.Object);
 	}
+
+	//AnimInfo.WeaponInfo
+	Projectile = AStickyBomb::StaticClass();
+	Max = 4;
 }

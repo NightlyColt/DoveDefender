@@ -32,6 +32,7 @@ ABaseCharacter::ABaseCharacter()
 	EffectComp->SetupAttachment(GetMesh());
 	EffectComp->SetWorldLocation(FVector(0, 0, 140));
 
+	GetMesh()->SetGenerateOverlapEvents(true);
 	WeaponClass = ABaseWeapon::StaticClass();
 	Movement = GetMovementComponent();
 }
@@ -131,9 +132,11 @@ bool ABaseCharacter::CanPickupHealth()
 void ABaseCharacter::CharacterSwapWeapon()
 {
 	SetReferences();
+	BindWeaponAndAnimationEvents();
+	CurrentWeapon->Reload();
 }
 
-void ABaseCharacter::SetReferences()
+void ABaseCharacter::SetReferences()				// Look inside here
 {
 	WeaponChild->SetChildActorClass(WeaponClass);
 
@@ -146,7 +149,7 @@ void ABaseCharacter::SetReferences()
 	else
 	{
 		UE_LOG(LogTemp, Error, TEXT("Found a Weapon"));
-
+		// Remember to get the weapon info from the current weapon and set the anim instance to that.
 		AnimBP = Cast<URifleAnim>(GetMesh()->GetAnimInstance());
 		if (nullptr == AnimBP)
 		{

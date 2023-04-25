@@ -50,20 +50,24 @@ ABaseProjectile::ABaseProjectile()
 void ABaseProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	FTimerHandle Handle;
-	GetWorld()->GetTimerManager().SetTimer(Handle, this, &ABaseProjectile::TimerEnded, TimeToDestroy, false);
+	
+	GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &ABaseProjectile::TimerEnded, TimeToDestroy, false);
 	//UE_LOG(LogTemp, Error, TEXT("Collsion"));
 
 }
 
 void ABaseProjectile::HandleCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
+	HandleOverlap(OtherActor, OtherComp, SweepResult);
+}
+
+void ABaseProjectile::HandleOverlap(AActor* OtherActor, UPrimitiveComponent* OtherComp, FHitResult SweepResult)
+{
 	UGameplayStatics::ApplyDamage(OtherActor, Damage, GetInstigatorController(), GetInstigator(), UDamageType::StaticClass());
 	if (!IsPendingKill())
 	{
 		Destroy();
 	}
-	
 }
 
 void ABaseProjectile::TimerEnded()

@@ -18,6 +18,14 @@ void UMainGameInstance::LoadLevelSafe(int index)
 	}
 }
 
+UMainGameInstance::UMainGameInstance()
+{
+	Levels.Add("CodeMainMenu");
+	Levels.Add("CodeDefault");
+
+	FirstLevelIndex = 1;
+}
+
 void UMainGameInstance::LoadFirstLevel()
 {
 	LoadLevelSafe(1);

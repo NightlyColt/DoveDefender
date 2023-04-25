@@ -10,6 +10,8 @@
 #include <Kismet/KismetSystemLibrary.h>
 #include "Components/TextBlock.h"
 #include <Kismet/KismetTextLibrary.h>
+#include "Components/WidgetSwitcher.h"
+
 
 UMyUserWidget::UMyUserWidget(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
 {
@@ -21,13 +23,31 @@ UMyUserWidget::UMyUserWidget(const FObjectInitializer& ObjectInitializer) :Super
 void UMyUserWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-	
 	auto Material = Cast<UMaterialInterface>(Reticle->Brush.GetResourceObject());
 	if (Material)
 	{
 		DynamicMaterial = UMaterialInstanceDynamic::Create(Material, this);
 		Reticle->SetBrushFromMaterial(DynamicMaterial);
 		SetMaterialColor(DefaultColor);
+	}
+	if (DynamicMaterial == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("NOT SET"));
+	}
+	else
+	{
+		DynamicMaterials.Add(DynamicMaterial);
+		auto Image = Cast<UImage>(ReticleSwitcher->GetWidgetAtIndex(1));
+		if (Image)
+		{
+			auto Mat = Cast<UMaterialInterface>(Image->Brush.GetResourceObject());
+			auto dynMat = UMaterialInstanceDynamic::Create(Mat, this);
+			DynamicMaterials.Add(dynMat);
+			Image->SetBrushFromMaterial(dynMat);
+		}
+		else
+			UE_LOG(LogTemp, Warning, TEXT("Image Not Found"));
+
 	}
 	CurrentAmmo->SetText(FText::FromString(TEXT("100")));
 	MaxAmmo->SetText(FText::FromString(TEXT("100")));
@@ -100,4 +120,11 @@ void UMyUserWidget::SetAmmo(float Current, float Max)
 {
 	CurrentAmmo->SetText(UKismetTextLibrary::Conv_FloatToText(Current, ERoundingMode::ToZero));
 	MaxAmmo->SetText(UKismetTextLibrary::Conv_FloatToText(Max, ERoundingMode::ToZero));
+}
+
+void UMyUserWidget::SetIconIndex(int WeaponIndex)
+{
+	IconWeaponSwitcher->SetActiveWidgetIndex(WeaponIndex);
+	ReticleSwitcher->SetActiveWidgetIndex(WeaponIndex);
+	DynamicMaterial = DynamicMaterials[WeaponIndex];
 }

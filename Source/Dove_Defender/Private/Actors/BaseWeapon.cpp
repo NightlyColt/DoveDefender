@@ -5,6 +5,7 @@
 #include "Actors/BaseProjectile.h"
 #include "Actors/BaseCharacter.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Anim/RifleAnim.h"
 
 
 // Sets default values
@@ -21,6 +22,8 @@ ABaseWeapon::ABaseWeapon()
 		SkeletalMesh->SetSkeletalMesh(SkeletalMeshAsset.Object);
 	}
 
+	
+	//AnimInfo.WeaponInfo = URifleAnim::StaticClass();                 // Can't do it this way until the anim instance class for the sticky weapon is done
 	Projectile = ABaseProjectile::StaticClass();
 	Current = 0;
 	Max = 5;
@@ -67,7 +70,7 @@ void ABaseWeapon::Shoot()
 		FActorSpawnParameters Params;
 		Params.Owner = OwningActor->GetController();
 		Params.Instigator = OwningActor;
-		AActor* proj = GetWorld()->SpawnActor<AActor>(ABaseProjectile::StaticClass(), Transforms, Params);
+		AActor* proj = GetWorld()->SpawnActor<AActor>(Projectile, Transforms, Params);
 		DoShoot = true;
 		OnShoot.Broadcast(); // Call
 		UseAmmo();

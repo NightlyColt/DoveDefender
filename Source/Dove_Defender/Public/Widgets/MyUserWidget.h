@@ -25,13 +25,16 @@ protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UImage* Reticle;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class UImage* WeaponIcon;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* CurrentAmmo;
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UTextBlock* MaxAmmo;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	class UWidgetSwitcher* IconWeaponSwitcher;
+	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
+	UWidgetSwitcher* ReticleSwitcher;
 
 	UMaterialInstanceDynamic* DynamicMaterial;
+	TArray<UMaterialInstanceDynamic*> DynamicMaterials;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FLinearColor DefaultColor;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
@@ -47,4 +50,6 @@ public:
 	void SetHealth(float ratio);
 	UFUNCTION(BlueprintCallable)
 	void SetAmmo(float Current, float Max);
+	UFUNCTION(BlueprintCallable)
+	void SetIconIndex(int WeaponIndex);
 };

@@ -18,6 +18,7 @@ protected:
 	void CharacterHeal(float Ratio) override;
 	void CharacterAmmoChanged(float Current, float Max) override;
 	bool CanPickupHealth() override;
+	void CharacterSwapWeapon() override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void SwapChildActorClass();
