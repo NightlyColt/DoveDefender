@@ -33,7 +33,7 @@ ABaseCharacter::ABaseCharacter()
 	EffectComp->SetWorldLocation(FVector(0, 0, 140));
 
 	GetMesh()->SetGenerateOverlapEvents(true);
-	WeaponClass = ABaseWeapon::StaticClass();
+	//WeaponClass = ABaseWeapon::StaticClass();
 	Movement = GetMovementComponent();
 }
 
@@ -88,6 +88,15 @@ void ABaseCharacter::CharacterWeaponActionEnded()
 }
 
 void ABaseCharacter::CharacterHeal(float Ratio)
+{
+}
+
+bool ABaseCharacter::CanPickupClip()
+{
+	return false;
+}
+
+void ABaseCharacter::AddClipSize(float AmountToAdd)
 {
 }
 
@@ -150,6 +159,10 @@ void ABaseCharacter::SetReferences()				// Look inside here
 	{
 		UE_LOG(LogTemp, Error, TEXT("Found a Weapon"));
 		// Remember to get the weapon info from the current weapon and set the anim instance to that.
+		int index;
+		TSubclassOf<URifleAnim> temp;
+		CurrentWeapon->GetWeaponInfo(temp, index);
+		GetMesh()->SetAnimInstanceClass(temp);
 		AnimBP = Cast<URifleAnim>(GetMesh()->GetAnimInstance());
 		if (nullptr == AnimBP)
 		{

@@ -55,6 +55,8 @@ void URifleAnim::PlayDeathAnim_Implementation(float Ratio)
 
 void URifleAnim::PlayHitAnim_Implementation()
 {
+	int Index;
+	HitAnimation = GetRandAnim(HitAnimations, Index);
 	PlaySlotAnimationAsDynamicMontage(HitAnimation, "Damaged");																
 }
 

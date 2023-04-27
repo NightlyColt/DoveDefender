@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "BasePickup.generated.h"
 
-UCLASS()
+UCLASS(abstract)
 class DOVE_DEFENDER_API ABasePickup : public AActor
 {
 	GENERATED_BODY()

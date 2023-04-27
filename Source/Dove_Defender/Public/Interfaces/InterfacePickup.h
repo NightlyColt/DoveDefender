@@ -23,4 +23,6 @@ class DOVE_DEFENDER_API IInterfacePickup
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual bool CanPickupHealth() = 0;
+	virtual bool CanPickupClip() = 0;
+	virtual void AddClipSize(float AmountToAdd) = 0;
 };

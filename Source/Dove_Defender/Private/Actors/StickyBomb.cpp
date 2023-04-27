@@ -4,6 +4,7 @@
 #include "Actors/StickyBomb.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include <Kismet/KismetSystemLibrary.h>
+#include <Kismet/GameplayStatics.h>
 
 AStickyBomb::AStickyBomb()
 {
@@ -12,13 +13,16 @@ AStickyBomb::AStickyBomb()
 	{
 		Mesh->SetMaterial(0, NewMaterial);
 	}
+	DamageRadius = 500;
 }
 
 void AStickyBomb::HandleOverlap(AActor* OtherActor, UPrimitiveComponent* OtherComp, FHitResult SweepResult)
 {
-	if (Cast<USkeletalMeshComponent>(OtherComp))
+	if (auto temp = Cast<USkeletalMeshComponent>(OtherComp))
 	{
-		Super::HandleOverlap(OtherActor,  OtherComp, SweepResult);
+		AttachToComponent(temp, FAttachmentTransformRules::KeepWorldTransform, SweepResult.BoneName);
+		Movement->StopMovementImmediately();
+		UKismetSystemLibrary::K2_ClearAndInvalidateTimerHandle(GetWorld(), DestroyTimerHandle);
 	}
 	else
 	{
@@ -36,4 +40,13 @@ void AStickyBomb::HandleOverlap(AActor* OtherActor, UPrimitiveComponent* OtherCo
 		}
 		
 	}
+}
+
+void AStickyBomb::SpecialPower()
+{
+	Super::SpecialPower();
+
+	TArray<AActor*> ignore;
+	UGameplayStatics::ApplyRadialDamage(GetWorld(), Damage, GetActorLocation(), DamageRadius, NULL, ignore, this, GetInstigatorController());
+	Destroy();
 }

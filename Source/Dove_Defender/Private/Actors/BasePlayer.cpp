@@ -50,6 +50,16 @@ bool ABasePlayer::CanPickupHealth()
 	return !HealthComp->IsFullHealth();
 }
 
+bool ABasePlayer::CanPickupClip()
+{
+	return true;
+}
+
+void ABasePlayer::AddClipSize(float AmountToAdd)
+{
+	CurrentWeapon->AddToClipSize(AmountToAdd);
+}
+
 
 
 ABasePlayer::ABasePlayer()
@@ -84,6 +94,8 @@ void ABasePlayer::SetupPlayerInputComponent(class UInputComponent* PlayerInputCo
 	PlayerInputComponent->BindAction("Shoot", EInputEvent::IE_Pressed, this, &ABasePlayer::CharacterShoot);
 	PlayerInputComponent->BindAction("Reload", EInputEvent::IE_Pressed, this, &ABasePlayer::CharacterReload);
 	PlayerInputComponent->BindAction("SwapWeapon", EInputEvent::IE_Pressed, this, &ABasePlayer::SwapChildActorClass);
+	PlayerInputComponent->BindAction("SuperPower", EInputEvent::IE_Pressed, this, &ABasePlayer::SuperPower);
+
 }
 
 void ABasePlayer::MoveForward(float Value)
@@ -101,14 +113,17 @@ void ABasePlayer::SwapChildActorClass()
 	if (WeaponClass == Weapon1)
 	{
 		WeaponClass = Weapon2;
-		GetMesh()->SetAnimInstanceClass(StickyWeaponAnim);
 	}
 	else
 	{
 		WeaponClass = Weapon1;
-		GetMesh()->SetAnimInstanceClass(RifleAnim);
 	}
 	CharacterSwapWeapon();
+}
+
+void ABasePlayer::SuperPower()
+{
+	CurrentWeapon->HandleSpecialPower();
 }
 
 void ABasePlayer::SetHealth(float Ratio)
@@ -167,13 +182,9 @@ FRotator ABasePlayer::GetBaseAimRotation() const
 void ABasePlayer::CharacterSwapWeapon()
 {
 	Super::CharacterSwapWeapon();
-	// this is temporary go back with an actual struct
-	if (WeaponClass == Weapon1)
-	{
-		HUD->SetIconIndex(0);
-	}
-	else
-	{
-		HUD->SetIconIndex(1);
-	}
+
+	int index;
+	TSubclassOf<URifleAnim> temp;
+	CurrentWeapon->GetWeaponInfo(temp, index);
+	HUD->SetIconIndex(index);
 }

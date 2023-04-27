@@ -18,10 +18,14 @@ protected:
 	void CharacterHeal(float Ratio) override;
 	void CharacterAmmoChanged(float Current, float Max) override;
 	bool CanPickupHealth() override;
+	bool CanPickupClip() override;
+	void AddClipSize(float AmountToAdd) override;
 	void CharacterSwapWeapon() override;
 	void MoveForward(float Value);
 	void MoveRight(float Value);
 	void SwapChildActorClass();
+	void SuperPower();
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
 	TSubclassOf<UUserWidget> WidgetClass;
 	class UMyUserWidget* HUD;

@@ -16,4 +16,10 @@ class DOVE_DEFENDER_API AStickyWeapon : public ABaseWeapon
 	
 public:
 	AStickyWeapon();
+protected:
+	AActor* Shoot() override;
+	void HandleSpecialPower() override;
+
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	TArray<class ABaseProjectile*> ShotProjectiles;
 };

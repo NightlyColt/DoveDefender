@@ -4,8 +4,9 @@
 #include "Actors/BaseWeapon.h"
 #include "Actors/BaseProjectile.h"
 #include "Actors/BaseCharacter.h"
-#include "Components/SkeletalMeshComponent.h"
 #include "Anim/RifleAnim.h"
+
+#include "Components/SkeletalMeshComponent.h"
 
 
 // Sets default values
@@ -25,8 +26,10 @@ ABaseWeapon::ABaseWeapon()
 	
 	//AnimInfo.WeaponInfo = URifleAnim::StaticClass();                 // Can't do it this way until the anim instance class for the sticky weapon is done
 	Projectile = ABaseProjectile::StaticClass();
+	WeaponInformation.WeaponInfo = URifleAnim::StaticClass();
 	Current = 0;
 	Max = 5;
+	NewClipSize = -1;
 }
 
 // Called when the game starts or when spawned
@@ -40,31 +43,22 @@ void ABaseWeapon::BeginPlay()
 	Reload();
 }
 
+void ABaseWeapon::HandleSpecialPower()
+{
+}
+
 void ABaseWeapon::UseAmmo()
 {
 	Current = FMath::Clamp<float>(Current - 1, 0, Max);
 	OnAmmoChanged.Broadcast(Current, Max);
 }
 
-bool ABaseWeapon::CanShoot() const
-{
-	return !DoShoot && !Dead && (Current > 0);
-}
-
-void ABaseWeapon::StopAnimation()
-{
-	UE_LOG(LogTemp, Warning, TEXT("Stoped"));
-
-	DoShoot = false;
-}
-
-void ABaseWeapon::Shoot()
+AActor* ABaseWeapon::Shoot()
 {
 	if (CanShoot())
 	{
 		FTransform Transforms;
 		Transforms.SetLocation(SkeletalMesh->GetSocketLocation("MuzzleFlashSocket"));
-		UE_LOG(LogTemp, Warning, TEXT("I Shot"));
 		Transforms.SetRotation(FQuat(OwningActor->GetBaseAimRotation()));
 
 		FActorSpawnParameters Params;
@@ -74,11 +68,32 @@ void ABaseWeapon::Shoot()
 		DoShoot = true;
 		OnShoot.Broadcast(); // Call
 		UseAmmo();
+		
+		return proj;
 	}
+	else
+	{
+		return nullptr;
+	}
+}
+
+bool ABaseWeapon::CanShoot() const
+{
+	return !DoShoot && !Dead && (Current > 0);
+}
+
+void ABaseWeapon::StopAnimation()
+{
+	DoShoot = false;
 }
 
 void ABaseWeapon::Reload()
 {
+	if (NewClipSize > 0)
+	{
+		Max = NewClipSize;
+		NewClipSize = -1;
+	}
 	Current = Max;
 	OnAmmoChanged.Broadcast(Current, Max);
 }
@@ -90,5 +105,17 @@ void ABaseWeapon::CheckStartReload()
 		DoShoot = true;
 		OnStartReload.Broadcast();
 	}
+}
+
+void ABaseWeapon::GetWeaponInfo(TSubclassOf<URifleAnim>& _WeaponInfo, int& HudIndex)
+{
+	_WeaponInfo = WeaponInformation.WeaponInfo;
+	HudIndex = WeaponInformation.HudIndex;
+}
+
+void ABaseWeapon::AddToClipSize(float Amount)
+{
+	NewClipSize = Amount + Max;
+	Reload();
 }
 

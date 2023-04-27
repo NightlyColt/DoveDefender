@@ -55,6 +55,33 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Direction;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
+	bool DebugDeath;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
+	bool DebugDamaged;
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
+	bool DebugReload;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+		class UAnimSequenceBase* ShootAnim;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+		class UAnimSequenceBase* ReloadAnim;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+		TArray<UAnimSequence*> DeathAnimations;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+		UAnimSequence* CurrentDeath;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
+		UAnimSequence* HitAnimation;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Animations | DeathIndex")
+		int DeathIndex;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TArray<UAnimSequence*> HitAnimations;
 	void DeathIsFinished();
 
 public:
@@ -66,29 +93,4 @@ public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FADispatcher OnReloadWeapon;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-	class UAnimSequenceBase* ShootAnim;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-	class UAnimSequenceBase* ReloadAnim;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
-	bool DebugDeath;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
-	bool DebugDamaged;
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Debug")
-	bool DebugReload;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-	TArray<UAnimSequence*> DeathAnimations;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-	UAnimSequence* CurrentDeath;
-
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-	UAnimSequence* HitAnimation;
-
-	UPROPERTY(BlueprintReadOnly, Category = "Animations | DeathIndex")
-	int DeathIndex;
 };

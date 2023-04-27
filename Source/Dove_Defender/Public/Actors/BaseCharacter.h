@@ -31,6 +31,8 @@ protected:
 	virtual void CharacterWeaponActionEnded();
 	UFUNCTION()
 	virtual void CharacterHeal(float Ratio);
+	virtual bool CanPickupClip();
+	virtual void AddClipSize(float AmountToAdd);
 	virtual bool CanPickupHealth();
 	virtual void CharacterSwapWeapon();
 	void SetReferences();
@@ -46,6 +48,7 @@ protected:
 	class UChildActorComponent* WeaponChild;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class ABaseWeapon* CurrentWeapon;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<ABaseWeapon> WeaponClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<ABaseWeapon> Weapon1;

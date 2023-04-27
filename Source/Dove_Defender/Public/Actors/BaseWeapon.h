@@ -6,6 +6,17 @@
 #include "GameFramework/Actor.h"
 #include "BaseWeapon.generated.h"
 
+USTRUCT(BlueprintType)
+struct FWeaponSync
+{
+	GENERATED_BODY()
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	TSubclassOf<class URifleAnim> WeaponInfo;
+	
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	int HudIndex;
+};
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEDispatcher);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FOnAmmoChangedEvent, float, CurrentAmmo, float, MaxAmmo);
 UCLASS()
@@ -13,11 +24,14 @@ class DOVE_DEFENDER_API ABaseWeapon : public AActor
 {
 	GENERATED_BODY()
 	
+	
 public:
 	// Sets default values for this actor's properties
 	ABaseWeapon();
 
 protected:
+	
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -25,15 +39,16 @@ protected:
 	float Current;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Max;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	float NewClipSize;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly)
+	FWeaponSync WeaponInformation;
+
 	// Declare a reference to the projectile that the weapon fires
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Projectile")
 	TSubclassOf<AActor> Projectile;
 	void UseAmmo();
-	
-	struct FWeaponSync
-	{
-		TSubclassOf<class UAnimRifle> WeaponInfo;
-	} AnimInfo;
 
 public:
 
@@ -56,6 +71,8 @@ public:
 	// Declare a function to stop the weapon's animation
 	void StopAnimation();
 
+	virtual void HandleSpecialPower();
+
 	// Declare a flag to indicate if the weapon is firing
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	bool DoShoot;
@@ -67,10 +84,13 @@ public:
 	APawn* OwningActor;
 
 	// Declare a function to fire the weapon
-	void Shoot();
+	virtual AActor* Shoot();
 
 	void Reload();
 
 	void CheckStartReload();
 
+	void GetWeaponInfo(TSubclassOf<URifleAnim>& _WeaponInfo, int& HudIndex);
+
+	void AddToClipSize(float Amount);
 };

@@ -70,6 +70,10 @@ void ABaseProjectile::HandleOverlap(AActor* OtherActor, UPrimitiveComponent* Oth
 	}
 }
 
+void ABaseProjectile::SpecialPower()
+{
+}
+
 void ABaseProjectile::TimerEnded()
 {
 	if (!IsPendingKill())
