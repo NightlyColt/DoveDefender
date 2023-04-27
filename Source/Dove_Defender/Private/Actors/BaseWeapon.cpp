@@ -16,16 +16,6 @@ ABaseWeapon::ABaseWeapon()
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
 	SetRootComponent(SkeletalMesh);
 
-	// Load the skeletal mesh from memory
-	static ConstructorHelpers::FObjectFinder<USkeletalMesh> SkeletalMeshAsset(TEXT("SkeletalMesh'/Game/END_Starter/Guns/Rifle/SK_Rifle.SK_Rifle'"));
-	if (SkeletalMeshAsset.Succeeded())
-	{
-		SkeletalMesh->SetSkeletalMesh(SkeletalMeshAsset.Object);
-	}
-
-	
-	//AnimInfo.WeaponInfo = URifleAnim::StaticClass();                 // Can't do it this way until the anim instance class for the sticky weapon is done
-	Projectile = ABaseProjectile::StaticClass();
 	WeaponInformation.WeaponInfo = URifleAnim::StaticClass();
 	Current = 0;
 	Max = 5;
@@ -39,7 +29,8 @@ void ABaseWeapon::BeginPlay()
 	
 	OwningActor = Cast<APawn>(GetParentActor());
 	if (nullptr == OwningActor)
-		UE_LOG(LogTemp, Error, TEXT("No parent attached"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "No parent attached");
+
 	Reload();
 }
 

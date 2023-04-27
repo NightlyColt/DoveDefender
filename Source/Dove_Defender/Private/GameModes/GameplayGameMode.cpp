@@ -28,7 +28,8 @@ void AGameplayGameMode::BeginPlay()
 	if (tempPlayer)
 		ActivePlayer = tempPlayer;
 	else
-		UE_LOG(LogTemp, Error, TEXT("Wrong Active Player"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Wrong Active Player");
+
 
 	ActivePlayer->OnDeathFinished.AddDynamic(this, &AGameplayGameMode::PlayerDestroyed);
 
@@ -37,14 +38,16 @@ void AGameplayGameMode::BeginPlay()
 	if (tempPC)
 		ActivePC = tempPC;
 	else
-		UE_LOG(LogTemp, Error, TEXT("Wrong Player Controller"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Wrong Player Controller");
+
 
 	// Get The Results Widget
 	auto tempWidget = Cast<UResultsScreen>(CreateWidget(ActivePC, ResultsClass));
 	if (tempWidget)
 		ResultsWidget = tempWidget;
 	else
-		UE_LOG(LogTemp, Error, TEXT("Wrong Results Widget"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Wrong Results Widget");
+
 
 	// Get Game Instance
 	auto tempInstance = Cast<UMainGameInstance>(GetGameInstance());
@@ -54,7 +57,8 @@ void AGameplayGameMode::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Wrong Game Instance"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Wrong Game Instance");
+
 	}
 }
 

@@ -45,12 +45,12 @@ void ABaseAI::CharacterAmmoChanged(float Current, float Max)
 		}
 		else
 		{
-			UE_LOG(LogTemp, Error, TEXT("BlackBoard Couldn't be found"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "BlackBoard Couldn't be found");
 		}
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("AIController Couldn't be found"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "AIController Couldn't be found");
 	}
 }
 

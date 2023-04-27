@@ -26,12 +26,13 @@ EBTNodeResult::Type UTaskFindPoint::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	const UBTNode* ActiveNode = OwnerComp.GetActiveNode();
 	if (tempB == nullptr)
 	{
-		UE_LOG(LogTemp, Error, TEXT(""));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "");
+
 	}
 	FVector Result;
 	if (UNavigationSystemV1::K2_GetRandomLocationInNavigableRadius(GetWorld(), ControlledPawn->GetActorLocation(), Result, Radius))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Expected Dest: %s"), *Result.ToString());
+
 		tempB->SetValue<UBlackboardKeyType_Vector>(OutputVector.SelectedKeyName, Result);
 		//UBTFunctionLibrary::SetBlackboardValueAsVector(OwnerComp.FindTemplateNode(ActiveNode), OutputVector, Result);
 		FinishLatentTask(OwnerComp, EBTNodeResult::Succeeded);
@@ -39,7 +40,8 @@ EBTNodeResult::Type UTaskFindPoint::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Couldn't Find a Location"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Couldn't Find a Location");
+
 	}
 
 	return EBTNodeResult::Failed;

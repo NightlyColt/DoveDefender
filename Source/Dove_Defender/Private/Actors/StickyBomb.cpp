@@ -8,11 +8,6 @@
 
 AStickyBomb::AStickyBomb()
 {
-	UMaterialInterface* NewMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("MaterialInstanceConstant'/Game/Art/MI_Purple.MI_Purple'"), nullptr, LOAD_None, nullptr);
-	if (NewMaterial != nullptr)
-	{
-		Mesh->SetMaterial(0, NewMaterial);
-	}
 	DamageRadius = 500;
 }
 

@@ -16,6 +16,8 @@
 #include "GameFramework/PawnMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Actors/StickyWeapon.h"
+#include "Comp/EffectComponent.h"
+
 void ABasePlayer::BeginPlay()
 {
 	Super::BeginPlay();
@@ -164,13 +166,15 @@ FRotator ABasePlayer::GetBaseAimRotation() const
 	{
 		Destination = HitLocation;
 		if (HitLocation.ContainsNaN())
-			UE_LOG(LogTemp, Warning, TEXT("HitLocation is NaN"))
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "HitLocation is NaN");
+
 	}
 	else
 	{
 		Destination = EndPoint;
 		if (EndPoint.ContainsNaN())
-			UE_LOG(LogTemp, Warning, TEXT("Endpoint is NaN"))
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Endpoint is NaN");
+
 	}
 
 	FVector Result = Destination - CurrentWeapon->SkeletalMesh->GetSocketLocation("MuzzleFlashSocket");

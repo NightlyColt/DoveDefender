@@ -19,17 +19,6 @@ ABaseProjectile::ABaseProjectile()
 	Collision->OnComponentBeginOverlap.AddDynamic(this, &ABaseProjectile::HandleCollision);
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetupAttachment(GetRootComponent());
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> MeshAsset(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
-	if (MeshAsset.Succeeded())
-	{
-		Mesh->SetStaticMesh(MeshAsset.Object);
-	}
-
-	UMaterialInterface* NewMaterial = LoadObject<UMaterialInterface>(nullptr, TEXT("Material'/Game/Art/M_FlatColor.M_FlatColor'"), nullptr, LOAD_None, nullptr);
-	if (NewMaterial != nullptr)
-	{
-		Mesh->SetMaterial(0, NewMaterial);
-	}
 	Mesh->SetCollisionProfileName("NoCollision");
 	Movement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Movement"));
 	Mesh->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
@@ -52,7 +41,6 @@ void ABaseProjectile::BeginPlay()
 	Super::BeginPlay();
 	
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &ABaseProjectile::TimerEnded, TimeToDestroy, false);
-	//UE_LOG(LogTemp, Error, TEXT("Collsion"));
 
 }
 

@@ -20,7 +20,8 @@ void UMainMenu::NativePreConstruct()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("We need the correct game instance"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "We need the correct game instance");
+
 	}
 	
 }

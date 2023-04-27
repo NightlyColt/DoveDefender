@@ -7,9 +7,6 @@
 
 URifleAnim::URifleAnim()
 {
-	static ConstructorHelpers::FObjectFinder<UAnimSequence> AnimAsset(TEXT("AnimSequence'/Game/END_Starter/Mannequin/A_Fire_Ironsights.A_Fire_Ironsights'"));
-
-	ShootAnim = AnimAsset.Object;
 	DeathIndex = -1;
 }
 
@@ -35,7 +32,7 @@ void URifleAnim::OnActionComplete()
 void URifleAnim::PlayShootAnim()
 {
 	PlaySlotAnimationAsDynamicMontage(ShootAnim, "Action");
-	UE_LOG(LogTemp, Warning, TEXT("Played"));
+
 }
 
 void URifleAnim::PlayReloadAnim()

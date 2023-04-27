@@ -23,6 +23,8 @@ protected:
 	
 	// Called when the game starts
 	virtual void BeginPlay() override;
+	UPROPERTY(BlueprintReadWrite, EditDefaultsOnly, Category = "Fire")
+	TSubclassOf<class AEffectsFire> FireClass;
 
 public:	
 	// Called every frame

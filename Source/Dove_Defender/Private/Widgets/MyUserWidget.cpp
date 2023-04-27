@@ -11,6 +11,7 @@
 #include "Components/TextBlock.h"
 #include <Kismet/KismetTextLibrary.h>
 #include "Components/WidgetSwitcher.h"
+#include "Materials/MaterialInstanceDynamic.h"
 
 
 UMyUserWidget::UMyUserWidget(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer)
@@ -32,7 +33,8 @@ void UMyUserWidget::NativeConstruct()
 	}
 	if (DynamicMaterial == nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("NOT SET"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "NOT SET");
+
 	}
 	else
 	{
@@ -46,7 +48,8 @@ void UMyUserWidget::NativeConstruct()
 			Image->SetBrushFromMaterial(dynMat);
 		}
 		else
-			UE_LOG(LogTemp, Warning, TEXT("Image Not Found"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Image Not Found");
+
 
 	}
 	CurrentAmmo->SetText(FText::FromString(TEXT("100")));

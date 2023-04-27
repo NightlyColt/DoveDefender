@@ -70,7 +70,8 @@ void ABaseCharacter::CharacterShoot()
 	if (CurrentWeapon != nullptr)
 		CurrentWeapon->Shoot();
 	else
-		UE_LOG(LogTemp, Error, TEXT("There's No Weapon To Use"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "There's No Weapon To Use");
+
 }
 
 void ABaseCharacter::CharacterReload()
@@ -153,11 +154,12 @@ void ABaseCharacter::SetReferences()				// Look inside here
 
 	if (nullptr == CurrentWeapon)
 	{
-		UE_LOG(LogTemp, Error, TEXT("There's No Weapon To Use"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "There's No Weapon To Use");
+
 	}
 	else
 	{
-		UE_LOG(LogTemp, Error, TEXT("Found a Weapon"));
+
 		// Remember to get the weapon info from the current weapon and set the anim instance to that.
 		int index;
 		TSubclassOf<URifleAnim> temp;
@@ -166,7 +168,8 @@ void ABaseCharacter::SetReferences()				// Look inside here
 		AnimBP = Cast<URifleAnim>(GetMesh()->GetAnimInstance());
 		if (nullptr == AnimBP)
 		{
-			UE_LOG(LogTemp, Error, TEXT("Animation Class Unvalid"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Animation Class Unvalid");
+
 		}
 	}
 }

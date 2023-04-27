@@ -33,7 +33,7 @@ void UEffectComponent::StartEffect(EDamageTypes Type, AActor* DamageCauser)
 		FActorSpawnParameters Params;
 		Params.Owner = DamageCauser;
 
-		auto temp = GetWorld()->SpawnActor<AEffectsFire>(AEffectsFire::StaticClass(), Transform, Params);
+		auto temp = GetWorld()->SpawnActor<AEffectsFire>(FireClass, Transform, Params);
 		AActor* player = GetOwner();
 		temp->AttachToActor(player, FAttachmentTransformRules::KeepWorldTransform);
 	}
