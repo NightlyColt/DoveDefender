@@ -25,15 +25,15 @@ void AStickyBomb::HandleOverlap(AActor* OtherActor, UPrimitiveComponent* OtherCo
 		{
 		case ECollisionChannel::ECC_WorldStatic:
 		{
-				Movement->StopMovementImmediately();
-				UKismetSystemLibrary::K2_ClearAndInvalidateTimerHandle(GetWorld(), DestroyTimerHandle);
-				TeleportTo(SweepResult.Location, GetActorRotation());
+			Movement->StopMovementImmediately();
+			UKismetSystemLibrary::K2_ClearAndInvalidateTimerHandle(GetWorld(), DestroyTimerHandle);
+			TeleportTo(SweepResult.Location, GetActorRotation());
 		}
-			break;
+		break;
 		default:
-			break;	
+			break;
 		}
-		
+
 	}
 }
 

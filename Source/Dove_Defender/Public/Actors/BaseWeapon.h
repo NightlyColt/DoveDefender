@@ -12,7 +12,7 @@ struct FWeaponSync
 	GENERATED_BODY()
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TSubclassOf<class URifleAnim> WeaponInfo;
-	
+
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	int HudIndex;
 };
@@ -24,13 +24,12 @@ class DOVE_DEFENDER_API ABaseWeapon : public AActor
 {
 	GENERATED_BODY()
 	
-	
-public:
+public:	
 	// Sets default values for this actor's properties
 	ABaseWeapon();
 
 protected:
-	
+
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

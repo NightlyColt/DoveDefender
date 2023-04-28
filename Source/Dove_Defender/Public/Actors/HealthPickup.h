@@ -13,7 +13,6 @@ UCLASS()
 class DOVE_DEFENDER_API AHealthPickup : public ADamagePickup
 {
 	GENERATED_BODY()
-	
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	class USoundBase* Sound;

@@ -12,11 +12,12 @@
 // Sets default values
 ABaseWeapon::ABaseWeapon()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	SkeletalMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMesh"));
 	SetRootComponent(SkeletalMesh);
 
 	WeaponInformation.WeaponInfo = URifleAnim::StaticClass();
+	WeaponInformation.HudIndex = 0;
 	Current = 0;
 	Max = 5;
 	NewClipSize = -1;
@@ -26,7 +27,7 @@ ABaseWeapon::ABaseWeapon()
 void ABaseWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	OwningActor = Cast<APawn>(GetParentActor());
 	if (nullptr == OwningActor)
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "No parent attached");
@@ -59,7 +60,7 @@ AActor* ABaseWeapon::Shoot()
 		DoShoot = true;
 		OnShoot.Broadcast(); // Call
 		UseAmmo();
-		
+
 		return proj;
 	}
 	else
@@ -107,6 +108,4 @@ void ABaseWeapon::GetWeaponInfo(TSubclassOf<URifleAnim>& _WeaponInfo, int& HudIn
 void ABaseWeapon::AddToClipSize(float Amount)
 {
 	NewClipSize = Amount + Max;
-	Reload();
 }
-

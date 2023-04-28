@@ -7,6 +7,8 @@
 #include "BrainComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Actors/BaseWeapon.h"
+#include "Comp/EffectComponent.h"
+
 void ABaseAI::Shoot()
 {
 	CharacterShoot();
@@ -65,4 +67,3 @@ void ABaseAI::BeginPlay()
 	Super::BeginPlay();
 	CurrentWeapon->Reload();
 }
-

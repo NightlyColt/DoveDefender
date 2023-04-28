@@ -4,10 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Actors/BaseCharacter.h"
-#include "Anim/RifleAnim.h"
 #include "BasePlayer.generated.h"
 
+/**
+ * 
+ */
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeathFinished);
 UCLASS()
 class DOVE_DEFENDER_API ABasePlayer : public ABaseCharacter
 {
@@ -29,7 +32,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")
 	TSubclassOf<UUserWidget> WidgetClass;
 	class UMyUserWidget* HUD;
-	
+
 	class USpringArmComponent* SpringArm;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
 	class UCameraComponent* Camera;
@@ -44,7 +47,7 @@ protected:
 public:
 	ABasePlayer();
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
 
 	UFUNCTION()
 	void SetHealth(float Ratio);
@@ -54,5 +57,6 @@ public:
 	void WonLevel();
 	FRotator GetBaseAimRotation() const override;
 
-	FADispatcher OnDeathFinished;
+	// Missing Delegate
+	FOnDeathFinished OnDeathFinished;
 };

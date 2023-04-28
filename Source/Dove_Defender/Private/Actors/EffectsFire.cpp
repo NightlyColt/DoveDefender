@@ -8,7 +8,7 @@
 // Sets default values
 AEffectsFire::AEffectsFire()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	ParticleSystem = CreateDefaultSubobject<UParticleSystemComponent>("ParticleSystem");
 	ParticleSystem->SetupAttachment(GetRootComponent());
@@ -21,7 +21,7 @@ AEffectsFire::AEffectsFire()
 void AEffectsFire::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame

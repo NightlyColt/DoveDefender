@@ -6,6 +6,7 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
+
 using namespace UP;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEOnDispatcher, float, Ratio);
 
@@ -14,7 +15,7 @@ class DOVE_DEFENDER_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
+public:
 	// Sets default values for this component's properties
 	UHealthComponent(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 
@@ -27,14 +28,14 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	float Max;
 
-public:	
+public:
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FEOnDispatcher OnDamaged;
 
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FEOnDispatcher OnDeath;
-	
+
 	UPROPERTY(BlueprintCallable, BlueprintAssignable, Category = "Function")
 	FEOnDispatcher OnHealthGained;
 	// Called every frame
@@ -45,5 +46,4 @@ public:
 
 	UFUNCTION()
 	void HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
-		
 };

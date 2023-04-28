@@ -30,5 +30,4 @@ protected:
 
 	UFUNCTION()
 	void HandleOnButtonClicked();
-	
 };

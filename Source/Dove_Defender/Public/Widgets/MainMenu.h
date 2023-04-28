@@ -28,12 +28,6 @@ protected:
 	class UMainGameInstance* GameInstance;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class USpacer* Spacer;
-	/*UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class MyButton* StartButton;
-	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	MyButton* QuitButton;*/
-	/*UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
-	class SSpacer* Spacer;*/
 public:
 	virtual void NativePreConstruct() override;
 	void NativeConstruct() override;
@@ -42,5 +36,4 @@ public:
 	void HandleQuit();
 	UFUNCTION()
 	void HandleLoadFirstLevel();
-
 };

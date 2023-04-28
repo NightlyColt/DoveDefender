@@ -12,3 +12,4 @@ void AMenuPlayerController::BeginPlay()
 	UWidgetBlueprintLibrary::SetInputMode_UIOnly(this, widget, true);
 	SetShowMouseCursor(true);
 }
+

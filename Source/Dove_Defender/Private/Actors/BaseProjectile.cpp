@@ -28,7 +28,7 @@ ABaseProjectile::ABaseProjectile()
 	Movement->ProjectileGravityScale = 0.f;
 
 	FVector Scale = FVector(.6f, .6f, .6f);
-	
+
 	Mesh->SetWorldScale3D(Scale);
 	Collision->SetWorldScale3D(Scale);
 	TimeToDestroy = 3.f;
@@ -39,7 +39,7 @@ ABaseProjectile::ABaseProjectile()
 void ABaseProjectile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	GetWorld()->GetTimerManager().SetTimer(DestroyTimerHandle, this, &ABaseProjectile::TimerEnded, TimeToDestroy, false);
 
 }

@@ -13,7 +13,6 @@ UCLASS()
 class DOVE_DEFENDER_API UMainGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
-	
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<FName> Levels;

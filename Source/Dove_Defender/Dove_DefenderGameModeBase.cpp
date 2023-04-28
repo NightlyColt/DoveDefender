@@ -1,6 +1,5 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
-#pragma once
 
-#include "CoreMinimal.h"
+#include "Dove_DefenderGameModeBase.h"
 

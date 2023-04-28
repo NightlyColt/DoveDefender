@@ -14,14 +14,12 @@ UHealthComponent::UHealthComponent(const FObjectInitializer& ObjectInitializer) 
 	// ...
 }
 
-
 // Called when the game starts
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	Current = Max;
 	GetOwner()->OnTakeAnyDamage.AddDynamic(this, &UHealthComponent::HandleDamage);
-	// ...
 	
 }
 
@@ -46,7 +44,7 @@ void UHealthComponent::SetStartHealth()
 	Current = Max;
 }
 
-void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser)
+void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
 	const IInterfaceEffects* effect = Cast<IInterfaceEffects>(DamageType);
 	if (effect)
@@ -68,7 +66,7 @@ void UHealthComponent::HandleDamage(AActor* DamagedActor, float Damage, const cl
 		}
 
 	}
-	else 
+	else
 	{
 		GetOwner()->OnTakeAnyDamage.RemoveDynamic(this, &UHealthComponent::HandleDamage);
 		OnDeath.Broadcast(0);

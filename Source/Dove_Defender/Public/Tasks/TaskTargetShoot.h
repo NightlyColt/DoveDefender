@@ -4,23 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "TaskFindPoint.generated.h"
+#include "TaskTargetShoot.generated.h"
 
 /**
  * 
  */
-UCLASS(Blueprintable)
-class DOVE_DEFENDER_API UTaskFindPoint : public UBTTaskNode
+UCLASS()
+class DOVE_DEFENDER_API UTaskTargetShoot : public UBTTaskNode
 {
 	GENERATED_BODY()
 protected:
 	AAIController* OwnerController;
 	APawn* ControlledPawn;
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
-public:
-	UTaskFindPoint();
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float Radius;
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	FBlackboardKeySelector OutputVector;
+	void OnMessage(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, FName Message, int32 RequestID, bool bSuccess) override;
 };

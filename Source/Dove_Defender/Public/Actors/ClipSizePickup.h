@@ -15,7 +15,6 @@ class DOVE_DEFENDER_API AClipSizePickup : public ABasePickup
 	GENERATED_BODY()
 public:
 	AClipSizePickup();
-	
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadonly)
 	class UStaticMeshComponent* Mesh;

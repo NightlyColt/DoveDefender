@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "GameModes/GameplayGameMode.h"
+#include "GameModes/GamplayGameMode.h"
 #include <Kismet/GameplayStatics.h>
 #include "Widgets/ResultsScreen.h"
 #include "GameInstances/MainGameInstance.h"
@@ -9,11 +9,11 @@
 #include "Actors/BaseAI.h"
 #include <Blueprint/WidgetBlueprintLibrary.h>
 #include "Controllers/GamePlayerController.h"
-AGameplayGameMode::AGameplayGameMode()
+AGamplayGameMode::AGamplayGameMode()
 {
 }
 
-void AGameplayGameMode::BeginPlay()
+void AGamplayGameMode::BeginPlay()
 {
 	TArray<AActor*> OutActors;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), EnemyClass, OutActors); // Maybe make the subclass a variable
@@ -21,7 +21,7 @@ void AGameplayGameMode::BeginPlay()
 	NumberOfEnemies = OutActors.Num();
 	for (auto& enemy : OutActors)
 	{
-		enemy->OnDestroyed.AddDynamic(this, &AGameplayGameMode::EnemyDestroyed);
+		enemy->OnDestroyed.AddDynamic(this, &AGamplayGameMode::EnemyDestroyed);
 	}
 	// Get Active Player
 	auto tempPlayer = Cast<ABasePlayer>(UGameplayStatics::GetActorOfClass(GetWorld(), PlayerClass)); // Maybe make the subclass a variable
@@ -31,7 +31,7 @@ void AGameplayGameMode::BeginPlay()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "Wrong Active Player");
 
 
-	ActivePlayer->OnDeathFinished.AddDynamic(this, &AGameplayGameMode::PlayerDestroyed);
+	ActivePlayer->OnDeathFinished.AddDynamic(this, &AGamplayGameMode::PlayerDestroyed);
 
 	// Get Active Player Controller
 	auto tempPC = Cast<AGamePlayerController>(UGameplayStatics::GetActorOfClass(GetWorld(), PlayerControllerClass));
@@ -62,7 +62,7 @@ void AGameplayGameMode::BeginPlay()
 	}
 }
 
-void AGameplayGameMode::EnemyDestroyed(AActor* actor)
+void AGamplayGameMode::EnemyDestroyed(AActor* actor)
 {
 	if (--NumberOfEnemies == 0)
 	{
@@ -70,12 +70,12 @@ void AGameplayGameMode::EnemyDestroyed(AActor* actor)
 		ResultsWidget->AddToViewport(0);
 
 		FTimerHandle Handle;
-		GetWorld()->GetTimerManager().SetTimer(Handle, this, &AGameplayGameMode::LoadMainMenu, TimeToSeeWinScreen, false);
+		GetWorld()->GetTimerManager().SetTimer(Handle, this, &AGamplayGameMode::LoadMainMenu, TimeToSeeWinScreen, false);
 		ActivePlayer->WonLevel();
 	}
 }
 
-void AGameplayGameMode::PlayerDestroyed()
+void AGamplayGameMode::PlayerDestroyed()
 {
 	ResultsWidget->SetLose();
 	ActivePC->SetShowMouseCursor(true);
@@ -83,7 +83,7 @@ void AGameplayGameMode::PlayerDestroyed()
 	ResultsWidget->AddToViewport(0);
 }
 
-void AGameplayGameMode::LoadMainMenu()
+void AGamplayGameMode::LoadMainMenu()
 {
 	GameInstance->LoadMainMenu();
 }

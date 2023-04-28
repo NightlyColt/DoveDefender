@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Task/TaskReload.h"
+#include "Tasks/TaskTargetShoot.h"
 #include "AIController.h"
 #include "Interfaces/InterfaceWeapon.h"
-#include <BehaviorTree/BTFunctionLibrary.h>
-EBTNodeResult::Type UTaskReload::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
+
+EBTNodeResult::Type UTaskTargetShoot::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory)
 {
 	Super::ExecuteTask(OwnerComp, NodeMemory);
 	OwnerController = OwnerComp.GetAIOwner();
@@ -13,14 +13,15 @@ EBTNodeResult::Type UTaskReload::ExecuteTask(UBehaviorTreeComponent& OwnerComp, 
 	IInterfaceWeapon* tempI = Cast<IInterfaceWeapon>(ControlledPawn);
 	if (tempI)
 	{
-		tempI->Reload();
+		tempI->Shoot();
 		WaitForMessage(OwnerComp, "ActionFinished");
 		return EBTNodeResult::InProgress;
 	}
+
 	return EBTNodeResult::Failed;
 }
 
-void UTaskReload::OnMessage(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, FName Message, int32 RequestID, bool bSuccess)
+void UTaskTargetShoot::OnMessage(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, FName Message, int32 RequestID, bool bSuccess)
 {
 	if (Message == FName("ActionFinished"))
 	{

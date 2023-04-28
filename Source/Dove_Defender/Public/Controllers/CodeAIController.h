@@ -18,7 +18,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	FName KeyName;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
-		UBehaviorTree* BTAsset;
+	UBehaviorTree* BTAsset;
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UAIPerceptionComponent* AIPerception;
 

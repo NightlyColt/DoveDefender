@@ -4,17 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "GameplayGameMode.generated.h"
+#include "GamplayGameMode.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DOVE_DEFENDER_API AGameplayGameMode : public AGameModeBase
+class DOVE_DEFENDER_API AGamplayGameMode : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
-	AGameplayGameMode();
+	AGamplayGameMode();
 protected:
 	virtual void BeginPlay() override;
 	UFUNCTION()
@@ -42,5 +42,4 @@ protected:
 	float TimeToSeeWinScreen;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	class ABasePlayer* ActivePlayer;
-
 };

@@ -6,7 +6,6 @@
 #include "Blueprint/UserWidget.h"
 #include "ResultsScreen.generated.h"
 
-
 /**
  * 
  */
@@ -14,7 +13,6 @@ UCLASS()
 class DOVE_DEFENDER_API UResultsScreen : public UUserWidget
 {
 	GENERATED_BODY()
-	
 protected:
 	UPROPERTY(BlueprintReadOnly, meta = (BindWidget))
 	class UWidgetSwitcher* ResultsSwitch;

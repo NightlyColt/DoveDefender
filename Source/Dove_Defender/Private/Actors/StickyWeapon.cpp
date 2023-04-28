@@ -9,6 +9,7 @@ AStickyWeapon::AStickyWeapon()
 {
 	//AnimInfo.WeaponInfo
 	Projectile = AStickyBomb::StaticClass();
+	WeaponInformation.HudIndex = 1;
 	Max = 4;
 }
 

@@ -8,7 +8,7 @@
 #include "Components/Spacer.h"
 UMainMenu::UMainMenu(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	
+
 }
 
 void UMainMenu::NativePreConstruct()
@@ -23,7 +23,7 @@ void UMainMenu::NativePreConstruct()
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, "We need the correct game instance");
 
 	}
-	
+
 }
 
 void UMainMenu::NativeConstruct()

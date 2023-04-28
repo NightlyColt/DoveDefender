@@ -12,7 +12,7 @@ URifleAnim::URifleAnim()
 
 void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 	Super::NativeUpdateAnimation(DeltaSeconds);
-	
+
 	APawn* Pawn = TryGetPawnOwner();
 	if (nullptr != Pawn) {
 		auto Velocity = Pawn->GetVelocity();
@@ -21,7 +21,7 @@ void URifleAnim::NativeUpdateAnimation(float DeltaSeconds) {
 		Direction = CalculateDirection(Velocity, Rotation);
 	}
 	else
-		PersonaUpdate();
+		PersonaUpdates();
 }
 
 void URifleAnim::OnActionComplete()
@@ -40,9 +40,9 @@ void URifleAnim::PlayReloadAnim()
 	PlaySlotAnimationAsDynamicMontage(ReloadAnim, "Action");
 }
 
-void URifleAnim::PlayDeathAnim_Implementation(float Ratio)
+void URifleAnim::PlayDeathAnim(float Ratio)
 {
-	
+
 	CurrentDeath = GetRandAnim(DeathAnimations, DeathIndex);
 	float Time = CurrentDeath->GetPlayLength();
 
@@ -50,11 +50,11 @@ void URifleAnim::PlayDeathAnim_Implementation(float Ratio)
 	GetWorld()->GetTimerManager().SetTimer(Handle, this, &URifleAnim::DeathIsFinished, Time, false);
 }
 
-void URifleAnim::PlayHitAnim_Implementation()
+void URifleAnim::PlayHitAnim()
 {
 	int Index;
 	HitAnimation = GetRandAnim(HitAnimations, Index);
-	PlaySlotAnimationAsDynamicMontage(HitAnimation, "Damaged");																
+	PlaySlotAnimationAsDynamicMontage(HitAnimation, "Damaged");
 }
 
 UAnimSequence* URifleAnim::GetRandAnim(TArray<UAnimSequence*>& Animations, int& Index)
@@ -77,7 +77,7 @@ void URifleAnim::DeathIsFinished()
 	OnDeathFinished.Broadcast();
 }
 
-void URifleAnim::PersonaUpdate_Implementation()
+void URifleAnim::PersonaUpdates()
 {
 	PlayShootAnim();
 

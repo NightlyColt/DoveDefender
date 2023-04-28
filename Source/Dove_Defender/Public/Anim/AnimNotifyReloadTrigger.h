@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Anim/AnimNotifyTrigger.h"
+#include "Animation/AnimNotifies/AnimNotify_PlaySound.h"
 #include "AnimNotifyReloadTrigger.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DOVE_DEFENDER_API UAnimNotifyReloadTrigger : public UAnimNotifyTrigger
+class DOVE_DEFENDER_API UAnimNotifyReloadTrigger : public UAnimNotify_PlaySound
 {
 	GENERATED_BODY()
 public:

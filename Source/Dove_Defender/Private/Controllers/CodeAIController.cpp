@@ -4,11 +4,6 @@
 #include "Controllers/CodeAIController.h"
 #include "Perception/AIPerceptionComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
-//void ACodeAIController::OnPossess(APawn* aPawn)
-//{
-//	int x = 0;
-//	/*RunBehaviorTree()*/
-//}
 
 ACodeAIController::ACodeAIController()
 {

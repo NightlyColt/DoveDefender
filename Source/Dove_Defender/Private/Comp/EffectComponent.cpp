@@ -20,7 +20,7 @@ void UEffectComponent::BeginPlay()
 	Super::BeginPlay();
 
 	// ...
-	
+
 }
 
 void UEffectComponent::StartEffect(EDamageTypes Type, AActor* DamageCauser)
@@ -37,7 +37,7 @@ void UEffectComponent::StartEffect(EDamageTypes Type, AActor* DamageCauser)
 		AActor* player = GetOwner();
 		temp->AttachToActor(player, FAttachmentTransformRules::KeepWorldTransform);
 	}
-		break;
+	break;
 	case UEffectComponent::NumEffects:
 		break;
 	default:

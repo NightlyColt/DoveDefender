@@ -6,7 +6,6 @@
 #include "GameFramework/Actor.h"
 #include "BaseProjectile.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMyCharacterDeathEvent);
 UCLASS()
 class DOVE_DEFENDER_API ABaseProjectile : public AActor
 {
@@ -33,7 +32,7 @@ protected:
 	float Damage;
 
 	FTimerHandle DestroyTimerHandle;
-public:	
+public:
 	// Bind and timer
 	UPROPERTY(BlueprintReadWrite, Category = "Variables")
 	float TimeToDestroy;
@@ -42,6 +41,5 @@ public:
 	UFUNCTION()
 	void HandleCollision(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	virtual void SpecialPower();
-
 
 };

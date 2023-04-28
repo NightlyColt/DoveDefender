@@ -13,7 +13,6 @@ UCLASS()
 class DOVE_DEFENDER_API AMenuPlayerController : public APlayerController
 {
 	GENERATED_BODY()
-
 protected:
 	virtual void BeginPlay() override;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Widget")

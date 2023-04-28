@@ -9,8 +9,8 @@
 /**
  * 
  */
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FADispatcher);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FADispatcher);
 UCLASS()
 class DOVE_DEFENDER_API URifleAnim : public UAnimInstance
 {
@@ -26,23 +26,23 @@ public:
 	UFUNCTION()
 	void OnActionComplete();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Function")
-	void PersonaUpdate();
-	void virtual PersonaUpdate_Implementation();
+	UFUNCTION(BlueprintCallable, Category = "Function")
+	void PersonaUpdates();
+//	void virtual PersonaUpdates_Implementation();
 
 	UFUNCTION(BlueprintCallable)
 	void PlayShootAnim();
 
 	UFUNCTION(BlueprintCallable)
 	void PlayReloadAnim();
-	
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "Function")
-	void PlayDeathAnim(float Ratio);
-	void PlayDeathAnim_Implementation(float Ratio);
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Function")
+	void PlayDeathAnim(float Ratio);
+	//void PlayDeathAnim_Implementation(float Ratio);
+
+	UFUNCTION(BlueprintCallable)
 	void PlayHitAnim();
-	void PlayHitAnim_Implementation();
+	//void PlayHitAnim_Implementation();
 
 
 	UAnimSequence* GetRandAnim(TArray<UAnimSequence*>& Animations, int& Index);
@@ -63,22 +63,22 @@ protected:
 	bool DebugReload;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-		class UAnimSequenceBase* ShootAnim;
+	class UAnimSequenceBase* ShootAnim;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-		class UAnimSequenceBase* ReloadAnim;
+	class UAnimSequenceBase* ReloadAnim;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-		TArray<UAnimSequence*> DeathAnimations;
+	TArray<UAnimSequence*> DeathAnimations;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-		UAnimSequence* CurrentDeath;
+	UAnimSequence* CurrentDeath;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Animations")
-		UAnimSequence* HitAnimation;
+	UAnimSequence* HitAnimation;
 
 	UPROPERTY(BlueprintReadOnly, Category = "Animations | DeathIndex")
-		int DeathIndex;
+	int DeathIndex;
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TArray<UAnimSequence*> HitAnimations;

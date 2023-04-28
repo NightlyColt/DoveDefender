@@ -18,7 +18,7 @@
 // Sets default values
 ABaseCharacter::ABaseCharacter()
 {
- 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	GetMesh()->SetWorldRotation(FRotator(0.f, -90.f, 0.f));
 
@@ -35,6 +35,7 @@ ABaseCharacter::ABaseCharacter()
 	GetMesh()->SetGenerateOverlapEvents(true);
 	//WeaponClass = ABaseWeapon::StaticClass();
 	Movement = GetMovementComponent();
+
 }
 
 // Called when the game starts or when spawned
@@ -199,4 +200,3 @@ void ABaseCharacter::BindWeaponAndAnimationEvents()
 		AnimBP->OnReloadWeapon.AddDynamic(this, &ABaseCharacter::Reload);
 	}
 }
-

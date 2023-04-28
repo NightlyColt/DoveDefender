@@ -7,8 +7,8 @@
 #include "Interfaces/InterfacePickup.h"
 #include "BaseCharacter.generated.h"
 
-UCLASS()
-class  DOVE_DEFENDER_API ABaseCharacter : public ACharacter, public IInterfacePickup
+UCLASS(abstract)
+class DOVE_DEFENDER_API ABaseCharacter : public ACharacter, public IInterfacePickup
 {
 	GENERATED_BODY()
 
@@ -45,32 +45,32 @@ protected:
 	UFUNCTION()
 	void Reload();
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UChildActorComponent* WeaponChild;
+		class UChildActorComponent* WeaponChild;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class ABaseWeapon* CurrentWeapon;
+		class ABaseWeapon* CurrentWeapon;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<ABaseWeapon> WeaponClass;
+		TSubclassOf<ABaseWeapon> WeaponClass;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<ABaseWeapon> Weapon1;
+		TSubclassOf<ABaseWeapon> Weapon1;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TSubclassOf<class AStickyWeapon> Weapon2;
+		TSubclassOf<class AStickyWeapon> Weapon2;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	class URifleAnim* AnimBP;
-		
+		class URifleAnim* AnimBP;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	class UHealthComponent* HealthComp;
+		class UHealthComponent* HealthComp;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	class UEffectComponent* EffectComp;
 
 	UPawnMovementComponent* Movement;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-	
+
 	UFUNCTION()
 	void PlayShootAnim();
 
@@ -81,4 +81,5 @@ public:
 	virtual void CharacterDeath(float Ratio);
 	UFUNCTION()
 	virtual void CharacterDamaged(float Ratio);
+
 };

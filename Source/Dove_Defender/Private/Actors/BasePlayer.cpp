@@ -192,3 +192,5 @@ void ABasePlayer::CharacterSwapWeapon()
 	CurrentWeapon->GetWeaponInfo(temp, index);
 	HUD->SetIconIndex(index);
 }
+
+

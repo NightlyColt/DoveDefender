@@ -13,7 +13,6 @@ UCLASS()
 class DOVE_DEFENDER_API AStickyWeapon : public ABaseWeapon
 {
 	GENERATED_BODY()
-	
 public:
 	AStickyWeapon();
 protected:
